@@ -37,8 +37,14 @@
             <tr>
                 <td>{{ $task->title }}</td>
                 <td>{{ $task->description }}</td>
-                <td>{{$task->users->first()->name }}</td>
-                <td>{{$task->admins->first()->name}}</td>
+                <td>
+                    @if(isset($task->users->first()->name))
+                        {{$task->users->first()->name }}
+                    @endif
+                </td>
+                @if(isset($task->admins->first()->name))
+                    <td>{{$task->admins->first()->name}}</td>
+                @endif
             </tr>
         @endforeach
         </tbody>
