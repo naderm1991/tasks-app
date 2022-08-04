@@ -37,11 +37,11 @@
             <tr>
                 <td>{{ $task->title }}</td>
                 <td>{{ $task->description }}</td>
+                @if(isset($task->users->first()->name))
                 <td>
-                    @if(isset($task->users->first()->name))
-                        {{$task->users->first()->name }}
-                    @endif
+                    {{$task->users->first()->name }}
                 </td>
+                @endif
                 @if(isset($task->admins->first()->name))
                     <td>{{$task->admins->first()->name}}</td>
                 @endif
