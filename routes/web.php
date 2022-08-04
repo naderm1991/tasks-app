@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('tasks.index');
 });
 
 Route::resource('tasks', TaskController::class);
+Route::get('user/search', [UserController::class, 'search']);
+Route::get('statistics/tasks', [StatisticsController::class, 'tasks'])->name('statistics.tasks');

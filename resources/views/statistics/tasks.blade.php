@@ -10,11 +10,10 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Tasks</h2>
+                <h2>Laravel 9 CRUD Example Tutorial</h2>
             </div>
             <div class="pull-right mb-2">
-                <a class="btn btn-success" href="{{ route('tasks.create') }}">Create tasks</a>
-                <a class="btn btn-success" href="{{ route('statistics.tasks') }}">Show Statistics</a>
+                <a class="btn btn-success" href="{{ route('tasks.create') }}"> Create tasks</a>
             </div>
         </div>
     </div>
@@ -26,24 +25,19 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Assigned Name</th>
-            <th>Admin Name</th>
+            <th>Name</th>
+            <th>Tasks Number</th>
         </tr>
         </thead>
         <tbody>
-        @foreach ($tasks as $task)
+        @foreach ($tasks_count as $task)
             <tr>
-                <td>{{ $task->title }}</td>
-                <td>{{ $task->description }}</td>
-                <td>{{$task->users->first()->name }}</td>
-                <td>{{$task->admins->first()->name}}</td>
+                <td>{{ $task->name }}</td>
+                <td>{{ $task->count }}</td>
             </tr>
         @endforeach
         </tbody>
     </table>
-    {!! $tasks->links() !!}
 </div>
 </body>
 </html>

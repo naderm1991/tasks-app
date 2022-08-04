@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    private $validationItems = [
+        'title' => 'required',
+        'description' => 'required',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::orderBy('id','desc')->paginate(5);
+        $tasks = Task::orderBy('id','desc')->paginate(10);
         return view('tasks.index', compact('tasks'));
     }
 
@@ -40,15 +45,11 @@ class TaskController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-        ]);
+        $request->validate($this->validationItems);
 
         Task::create($request->post());
 
-        return redirect()->route('task.index')->with('success','Company has been created successfully.');
+        return redirect()->route('tasks.index')->with('success','Task has been created successfully.');
     }
 
     /**
@@ -82,15 +83,11 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-        ]);
+        $request->validate($this->validationItems);
 
         $task->fill($request->post())->save();
 
-        return redirect()->route('tasks.index')->with('success','Company Has Been updated successfully');
+        return redirect()->route('tasks.index')->with('success','Task Has Been updated successfully');
     }
 
     /**

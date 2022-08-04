@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @method static orderBy(string $string, string $string1)
@@ -13,5 +15,27 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'assigned_by_id','assigned_to_id'];
+    protected $fillable = ['title', 'description', 'assigned_by_id','assigned_to_id'];
+
+    public function admins(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'tasks','id',
+            'assigned_by_id');
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,'tasks','id','assigned_to_id');
+    }
+
+    static function userTasksCount(): \Illuminate\Support\Collection
+    {
+        return DB::table('users')
+            ->join('tasks', 'users.id', '=', 'tasks.assigned_to_id')
+            ->select('users.*','tasks.*', DB::raw('count(tasks.id) as count'))
+            ->groupBy('users.id')
+            ->orderBy('count','DESC')
+            ->get();
+    }
 }
