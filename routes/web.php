@@ -21,5 +21,5 @@ Route::get('/', function () {
 });
 
 Route::resource('tasks', TaskController::class);
-Route::get('user/search', [UserController::class, 'search']);
+Route::get('user/search', [UserController::class, 'search'])->name('users.search');
 Route::get('statistics/tasks', [StatisticsController::class, 'tasks'])->name('statistics.tasks');

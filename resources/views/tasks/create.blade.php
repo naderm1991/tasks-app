@@ -77,8 +77,7 @@
 
     $('.assigned_by_id').select2({
         ajax: {
-            //todo use urls function to get the URL
-            url: 'http://127.0.0.1:8000/user/search?is_admin=1',
+            url: '{{ route('users.search') }}'+'?is_admin=1',
             dataType: 'json',
             processResults: function (data) {
                 // Transforms the top-level key of the response object from 'items' to 'results'
@@ -95,8 +94,7 @@
     });
     $('.assigned_to_id').select2({
         ajax: {
-            //todo use urls function to get the URL
-            url: 'http://127.0.0.1:8000/user/search?is_admin=0',
+            url: '{{ route('users.search') }}'+'?is_admin=0',
             dataType: 'json',
             processResults: function (data) {
                 // Transforms the top-level key of the response object from 'items' to 'results'
