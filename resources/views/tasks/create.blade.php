@@ -49,7 +49,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Description:</strong>
-                    <input type="text" name="description" class="form-control" placeholder="">
+                    <textarea id="description" class="form-control" name="description" rows="4" cols="50"></textarea>
                     @error('description')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
