@@ -49,7 +49,7 @@
         @endforeach
         </tbody>
     </table>
-    {!! $tasks->links() !!}
+    {{ $tasks->links('pagination::bootstrap-4') }}
 </div>
 </body>
 </html>
