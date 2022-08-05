@@ -59,9 +59,10 @@ class TasksTest extends TestCase
         $user = User::factory()->create([
             'is_admin' => 0
         ]);
-        $tasks = Task::factory(1)->create([
-            'assigned_by_id' =>$admin->id, // password
-            'assigned_to_id' =>$user->id, // password
+
+        Task::factory(1)->create([
+            'assigned_by_id' =>$admin->id,
+            'assigned_to_id' =>$user->id,
         ]);
     }
 
