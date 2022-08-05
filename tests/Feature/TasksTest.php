@@ -34,9 +34,10 @@ class TasksTest extends TestCase
     public function testTasksRoute()
     {
         $this->withoutMiddleware();
-        Task::factory(1)->create();
+        $task = Task::factory()->create();
         $response = $this->get('/tasks');
-        $this->assertStringContainsString('task', $response->content());
+        $this->assertStringContainsString($task->title, $response->content());
+        $this->assertStringContainsString($task->description, $response->content());
         $response->assertSuccessful();
     }
 
