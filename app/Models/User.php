@@ -52,7 +52,7 @@ class User extends Authenticatable
         return DB::table('users')
             ->where('name', 'like',"%".$term."%")
             ->where('is_admin',$is_admin)
-            ->get();
+            ->get(['id','name','is_adminx']);
     }
 
     public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany

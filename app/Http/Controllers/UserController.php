@@ -26,7 +26,7 @@ class UserController extends BaseController
             $term =$requests['term'];
         }
         $user= User::search($term,$requests["is_admin"]??0);
-        return $this->sendResponse($user, 'Product retrieved successfully.');
+        return $this->sendResponse($user, 'Users retrieved successfully.');
     }
 
 }

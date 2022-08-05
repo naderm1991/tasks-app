@@ -93,71 +93,21 @@
     });
 
     $('.assigned_to_id').select2({
-        {{--ajax: {--}}
-        {{--    cacheDataSource: [],--}}
-        {{--    url: '{{ route('users.search') }}'+'?is_admin=0',--}}
-        {{--    dataType: 'json',--}}
-        {{--    processResults: function (data) {--}}
-        {{--        // Transforms the top-level key of the response object from 'items' to 'results'--}}
-        {{--        return {--}}
-        {{--            results: $.map(data.data, function (item, index) {--}}
-        {{--                return {--}}
-        {{--                    id: item.id,--}}
-        {{--                    text: item.name,--}}
-        {{--                }--}}
-        {{--            }),--}}
-        {{--        };--}}
-        {{--    }--}}
-        {{--}--}}
-        query: function(query) {
-            self = this;
-            var key = query.term;
-            var cachedData = self.cacheDataSource[key];
-
-            if(cachedData) {
-                query.callback({results: cachedData.data});
-            } else {
-                $.ajax({
-                    url: '{{ route('users.search') }}'+'?is_admin=0',
-                    dataType: 'json',
-                    type: 'GET',
-                    success: function(data) {
-                        self.cacheDataSource[key] = data;
-                        query.callback({results: data.data});
-                    }
-                })
+        ajax: {
+            cacheDataSource: [],
+            url: '{{ route('users.search') }}'+'?is_admin=0',
+            dataType: 'json',
+            processResults: function (data) {
+                // Transforms the top-level key of the response object from 'items' to 'results'
+                return {
+                    results: $.map(data.data, function (item, index) {
+                        return {
+                            id: item.id,
+                            text: item.name,
+                        }
+                    }),
+                };
             }
-        },
-    });
-
-    $(".assigned_to_id").select2({
-        cacheDataSource: [],
-        placeholder: "Please enter the name",
-        query: function(query) {
-            self = this;
-            var key = query.term;
-            var cachedData = self.cacheDataSource[key];
-
-            if(cachedData) {
-                query.callback({results: cachedData.result});
-                return;
-            } else {
-                $.ajax({
-                    url: '/ajax/suggest/',
-                    data: { q : query.term },
-                    dataType: 'json',
-                    type: 'GET',
-                    success: function(data) {
-                        self.cacheDataSource[key] = data;
-                        query.callback({results: data.result});
-                    }
-                })
-            }
-        },
-        width: '250px',
-        formatResult: formatResult,
-        formatSelection: formatSelection,
-        dropdownCssClass: "bigdrop",
-        escapeMarkup: function (m) { return m; }
+        }
     });
 </script>
