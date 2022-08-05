@@ -9,8 +9,6 @@ use Validator;
 
 class BaseController extends \App\Http\Controllers\Controller
 {
-
-
     /**
      * success response method.
      *

@@ -55,7 +55,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Task  $company
+     * @param Task $task
      * @return Application|Factory|View
      */
     public function show(Task $task)
@@ -99,6 +99,6 @@ class TaskController extends Controller
     public function destroy(Task $task): RedirectResponse
     {
         $task->delete();
-        return redirect()->route('tasks.index')->with('success','Company has been deleted successfully');
+        return redirect()->route('tasks.index')->with('success','Tasks has been deleted successfully');
     }
 }
