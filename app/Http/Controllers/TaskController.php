@@ -14,6 +14,8 @@ class TaskController extends Controller
     private $validationItems = [
         'title' => 'required',
         'description' => 'required',
+        'assigned_by_id'=>'required',
+        'assigned_to_id' =>'required'
     ];
 
     /**

@@ -36,6 +36,7 @@ class Task extends Model
             ->select('users.*','tasks.*', DB::raw('count(tasks.id) as count'))
             ->groupBy('users.id')
             ->orderBy('count','DESC')
+            ->limit(10)
             ->get();
     }
 }
