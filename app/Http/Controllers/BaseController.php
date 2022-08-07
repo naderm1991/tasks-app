@@ -27,7 +27,6 @@ class BaseController extends \App\Http\Controllers\Controller
         return response()->json($response, 200);
     }
 
-
     /**
      * return error response.
      *

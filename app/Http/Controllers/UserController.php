@@ -22,9 +22,7 @@ class UserController extends BaseController
     {
         $term = "";
         $requests = $request->all();
-        if (isset($requests['term'])){
-            $term =$requests['term'];
-        }
+        if (isset($requests['term'])){$term =$requests['term'];}
         $user= User::search($term,$requests["is_admin"]??0);
         return $this->sendResponse($user, 'Users retrieved successfully.');
     }
