@@ -6,12 +6,25 @@ use App\Http\Controllers\BaseController;
 use App\Http\Resources\UserResource;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class UserController extends BaseController
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function index()
+    {
+        $users = User::orderBy('id','desc')->paginate(10);
+        return view('users.index', compact('users'));
+    }
+
     /**
      * Show the profile for a given user.
      *
@@ -26,5 +39,4 @@ class UserController extends BaseController
         $user= User::search($term,$requests["is_admin"]??0);
         return $this->sendResponse($user, 'Users retrieved successfully.');
     }
-
 }

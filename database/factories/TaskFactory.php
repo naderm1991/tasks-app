@@ -17,8 +17,8 @@ class TaskFactory extends Factory
         return [
             'title' => $this->faker->title,
             'description' => $this->faker->text,
-            'assigned_by_id' =>1,
-            'assigned_to_id' =>1542,
+            'assigned_by_id' => rand(1,500),
+            'assigned_to_id' => rand(501,50500),
         ];
     }
 

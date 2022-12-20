@@ -21,5 +21,8 @@ Route::get('/', function () {
 });
 
 Route::resource('tasks', TaskController::class);
+Route::resource('users', UserController::class);
 Route::get('user/search', [UserController::class, 'search'])->name('users.search');
 Route::get('statistics/tasks', [StatisticsController::class, 'tasks'])->name('statistics.tasks');
+
+// gamed awi

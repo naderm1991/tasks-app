@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,11 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(100)->create([
-            'is_admin' => 1
-        ]);
-        User::factory(10000)->create([
-            'is_admin' => 0
-        ]);
+//        Company::factory(100)->create()->each(function ($company) {
+//            $company->users()->saveMany(User::factory(5)->make(['is_admin' => 1]));
+//        });
+//        Company::factory(10000)->create()->each(function ($company) {
+//            $company->users()->saveMany(User::factory(5)->make(['is_admin' => 0]));
+//        });
+
+        Task::factory(500)->create();
     }
 }

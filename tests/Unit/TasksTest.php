@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-
 class TasksTest extends TestCase
 {
     /**

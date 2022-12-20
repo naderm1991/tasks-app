@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
@@ -12,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int|mixed $isAdmin
+ * @method static orderBy(string $string, string $string1)
  */
 class User extends Authenticatable
 {
@@ -52,12 +54,15 @@ class User extends Authenticatable
         return DB::table('users')
             ->where('name', 'like',"%".$term."%")
             ->where('is_admin',$is_admin)
-            ->get(['id','name','is_admin']);
+            ->get(['id','name','is_admin'])
+        ;
     }
-
-    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
     }
-
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 }
