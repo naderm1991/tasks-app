@@ -49,6 +49,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //protected $with = ['company'];
+
     public static function search($term,$is_admin=0): Collection
     {
         return DB::table('users')
@@ -59,7 +61,7 @@ class User extends Authenticatable
     }
     public function tasks(): HasMany
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class,'assigned_to_id');
     }
     public function company(): BelongsTo
     {
