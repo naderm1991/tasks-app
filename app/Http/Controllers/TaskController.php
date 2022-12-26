@@ -34,7 +34,7 @@ class TaskController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(): View|Factory|Application
     {
         return view('tasks.create');
     }
@@ -71,7 +71,7 @@ class TaskController extends Controller
      * @param  Task  $task
      * @return Application|Factory|View
      */
-    public function edit(Task $task)
+    public function edit(Task $task): View|Factory|Application
     {
         return view('tasks.edit',compact('task'));
     }
@@ -86,9 +86,7 @@ class TaskController extends Controller
     public function update(Request $request, Task $task): RedirectResponse
     {
         $request->validate($this->validationItems);
-
         $task->fill($request->post())->save();
-
         return redirect()->route('tasks.index')->with('success','Task Has Been updated successfully');
     }
 

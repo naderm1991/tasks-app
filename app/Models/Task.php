@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 
@@ -23,10 +24,10 @@ class Task extends Model
             'assigned_by_id');
     }
 
-    public function users(): BelongsToMany
+    public function user(): BelongsTo
     {
-        return $this->belongsToMany(
-            User::class,'tasks','id','assigned_to_id');
+        return $this->belongsTo(
+            User::class,'assigned_to_id','id');
     }
 
     static function userTasksCount(): \Illuminate\Support\Collection
@@ -37,6 +38,7 @@ class Task extends Model
             ->groupBy('users.id')
             ->orderBy('count','DESC')
             ->limit(10)
-            ->get();
+            ->get()
+        ;
     }
 }
