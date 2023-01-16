@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
+use App\Models\Login;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -23,6 +24,15 @@ class DatabaseSeeder extends Seeder
 //            $company->users()->saveMany(User::factory(5)->make(['is_admin' => 0]));
 //        });
 
-        Task::factory(500)->create();
+        //Task::factory(500)->create();
+
+        $users = User::all();
+        foreach ($users as $user) {
+            Login::factory(1)->create(
+                [
+                    'user_id'=>$user->id
+                ]
+            );
+        }
     }
 }

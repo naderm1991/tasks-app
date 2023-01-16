@@ -23,14 +23,14 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>Last login</th>
+
         </tr>
         </thead>
         <tbody>
         @foreach ($users as $user)
             <tr>
                 <td>{{ $user->name }}</td>
-            </tr>
-            <tr>
                 <td>
                     {{ $user->logins()->latest()->first()->created_at->diffForHumans() }}
                 </td>

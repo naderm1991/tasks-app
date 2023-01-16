@@ -25,8 +25,5 @@ class AddNameIndexToTasks extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            //
-        });
     }
 }

@@ -22,7 +22,10 @@ class UserController extends BaseController
     public function index(): \Illuminate\Contracts\View\View|Factory|Application
     {
         $users = User::query()
-            ->select(['name'])->orderBy('id','desc')->paginate(10)
+            ->select(['id','name'])
+            ->with('logins')
+            ->orderBy('id','desc')
+            ->paginate(10)
         ;
         return view('users.index', compact('users'));
     }

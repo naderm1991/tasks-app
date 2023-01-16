@@ -13,8 +13,11 @@ class CreateLoginsTable extends Migration
      */
     public function up()
     {
-        Schema::table('logins', function (Blueprint $table) {
-            //
+        Schema::create('logins', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('ip_address', 50);
+            $table->timestamp('created_at');
         });
     }
 
@@ -25,11 +28,7 @@ class CreateLoginsTable extends Migration
      */
     public function down()
     {
-        Schema::create('logins', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('ip_address', 50);
-            $table->timestamp('create_at');
-        });
+        Schema::dropIfExists('logins');
+
     }
 }
