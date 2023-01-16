@@ -18,10 +18,11 @@ class Task extends Model
 
     protected $fillable = ['title', 'description', 'assigned_by_id','assigned_to_id'];
 
-    public function admins(): BelongsToMany
+    public function admin(): BelongsTo
     {
-        return $this->belongsToMany(User::class,'tasks','id',
-            'assigned_by_id');
+        return $this->belongsTo(
+            User::class,'assigned_by_id','id');
+//        return $this->belongsToMany(User::class,'tasks','id', 'assigned_by_id');
     }
 
     public function user(): BelongsTo

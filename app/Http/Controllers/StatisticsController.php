@@ -27,20 +27,13 @@ class StatisticsController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function tasksPerYear()
+    public function tasksPerYear(): \Illuminate\Contracts\View\View
     {
-        //return 'test';
-
         $years = Task::query()
             ->select('id','title','created_at','assigned_by_id','assigned_to_id')
-            ->with([
-                'user' => function ($query){
-                    $query->select('id','name');
-                },
-                'admins'
-            ])
+            ->with(['user:id,name'])
             ->latest('created_at')
-            ->limit(1000)
+            ->limit(500)
             ->get()
             ->groupBy(fn ($task) => $task->created_at->year)
         ;

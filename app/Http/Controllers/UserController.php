@@ -19,9 +19,11 @@ class UserController extends BaseController
      *
      * @return Application|Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View|Factory|Application
     {
-        $users = User::orderBy('id','desc')->paginate(10);
+        $users = User::query()
+            ->select(['name'])->orderBy('id','desc')->paginate(10)
+        ;
         return view('users.index', compact('users'));
     }
 

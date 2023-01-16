@@ -39,13 +39,13 @@
                 <td>{{ $task->id }}</td>
                 <td>{{ $task->title }}</td>
                 <td>{{ $task->description }}</td>
-                @if(isset($task->users->first()->name))
+                @if(isset($task->user->name))
                 <td>
-                    {{$task->users->first()->name }}
+                    {{$task->user->name }}
                 </td>
                 @endif
-                @if(isset($task->admins->first()->name))
-                    <td>{{$task->admins->first()->name}}</td>
+                @if(isset($task->admin->name))
+                    <td>{{$task->admin->name}}</td>
                 @endif
             </tr>
         @endforeach

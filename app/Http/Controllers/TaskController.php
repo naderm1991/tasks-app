@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    private $validationItems = [
+    private array $validationItems = [
         'title' => 'required',
         'description' => 'required',
         'assigned_by_id'=>'required',
@@ -23,9 +23,12 @@ class TaskController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        $tasks = Task::with(['users','admins'])->orderBy('title','desc')->paginate(100);
+        $tasks = Task::with(['user','admin'])
+            ->orderBy('title','desc')
+            ->paginate(100)
+        ;
         return view('tasks.index', compact('tasks'));
     }
 
@@ -51,7 +54,8 @@ class TaskController extends Controller
 
         Task::create($request->post());
 
-        return redirect()->route('tasks.index')->with('success','Task has been created successfully.');
+        return redirect()->route('tasks.index')
+            ->with('success','Task has been created successfully.');
     }
 
     /**
