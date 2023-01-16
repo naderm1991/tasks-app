@@ -30,6 +30,11 @@
             <tr>
                 <td>{{ $user->name }}</td>
             </tr>
+            <tr>
+                <td>
+                    {{ $user->logins()->latest()->first()->created_at->diffForHumans() }}
+                </td>
+            </tr>
         @endforeach
         </tbody>
     </table>
