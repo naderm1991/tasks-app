@@ -24,7 +24,6 @@
         <tr>
             <th>Name</th>
             <th>Last login</th>
-
         </tr>
         </thead>
         <tbody>
@@ -32,7 +31,7 @@
             <tr>
                 <td>{{ $user->name }}</td>
                 <td>
-                    {{ $user->logins()->latest()->first()->created_at->diffForHumans() }}
+                    {{ $user->logins->sortByDesc('created_at')->first()->created_at->diffForHumans() }}
                 </td>
             </tr>
         @endforeach

@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('is_admin');
             $table->rememberToken();
+            // de-normalization // caching
+            //$table->foreignId('last_login_id')->constrained('logins');
             $table->timestamps();
         });
     }

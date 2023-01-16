@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $users = User::all();
         foreach ($users as $user) {
-            Login::factory(1)->create(
+            Login::factory(10)->create(
                 [
                     'user_id'=>$user->id
                 ]

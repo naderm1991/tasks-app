@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Resources\UserResource;
+use App\Models\Login;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -27,6 +28,7 @@ class UserController extends BaseController
             ->orderBy('id','desc')
             ->paginate(10)
         ;
+
         return view('users.index', compact('users'));
     }
 
