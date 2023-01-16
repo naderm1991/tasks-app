@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Company;
 use App\Models\Task;
 use App\Models\User;
 use Database\Factories\UserFactory;
@@ -12,20 +13,24 @@ use Tests\TestCase;
 class TasksTest extends TestCase
 {
 
+    private int $company_id = 0;
     public function setUp(): void
     {
         parent::setUp();
         $this->setBaseRoute('tasks');
         $this->setBaseModel('App\Models\Task');
+        $this->company_id = Company::factory()->create()->id;
     }
 
     /** @test */
     public function add_new_task(){
-        $admin =  User::factory()->create([
-            'is_admin' => 1
+        User::factory()->create([
+            'is_admin' => 1,
+            'company_id'=>$this->company_id
         ]);
-        $user = User::factory()->create([
-            'is_admin' => 0
+        User::factory()->create([
+            'is_admin' => 0,
+            'company_id'=>$this->company_id
         ]);
         $this->create();
     }
@@ -45,20 +50,22 @@ class TasksTest extends TestCase
      * @test
      * @return void
      */
-    public function testUserStatisticsRoutes()
+    public function testUserStatisticsRoutes(): void
     {
         $this->AddDummyData();
-        $response = $this->get('/statistics/tasks');
+        $response = $this->get('/statistics/user_tasks_count');
         $response->assertSuccessful();
     }
 
     private function AddDummyData()
     {
         $admin =  User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
+            'company_id' => $this->company_id
         ]);
         $user = User::factory()->create([
-            'is_admin' => 0
+            'is_admin' => 0,
+            'company_id' => $this->company_id
         ]);
 
         Task::factory(1)->create([

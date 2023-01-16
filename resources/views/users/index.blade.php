@@ -22,17 +22,17 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Last login</th>
+            <th>NAME</th>
+            <th>EMAIL</th>
+            <th>LAST LOGIN</th>
         </tr>
         </thead>
         <tbody>
         @foreach ($users as $user)
             <tr>
                 <td>{{ $user->name }}</td>
-                <td>
-                    {{ $user->logins->sortByDesc('created_at')->first()->created_at->diffForHumans() }}
-                </td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->last_login_at->diffForHumans() }}</td>
             </tr>
         @endforeach
         </tbody>
