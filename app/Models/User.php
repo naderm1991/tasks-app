@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -70,30 +71,23 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
-
     public function logins(): HasMany
     {
         return $this->hasMany(Login::class);
     }
-    public function scopeWithLastLoginAt($query): void
+    public function lastLogin(): BelongsTo
     {
-        $query->addSelect(['last_login_at' =>
-            Login::query()->select('created_at')
-                ->whereColumn('user_id','users.id')
-                ->latest()
-                ->take(1)
-            ,
-        ])
-        ->withCasts(['last_login_at'=>'datetime']);
+        return $this->belongsTo(Login::class);
     }
-    public function scopeWithLastLoginIpAddress($query): void
+    public function scopeWithLastLogin(Builder $query)
     {
-        $query->addSelect(['ip_address' =>
-            Login::query()->select('ip_address')
-                ->whereColumn('user_id','users.id')
-                ->latest()
-                ->take(1)
-            ,
+        $query->addSelect([
+            'last_login_id'=> Login::query()
+                ->select('id')
+            ->whereColumn('user_id','users.id')
+            ->latest()
+            ->take(1)
+            ->with('lastLogin')
         ]);
     }
 }

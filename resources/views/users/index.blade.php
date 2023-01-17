@@ -36,9 +36,9 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    {{ $user->last_login_at->diffForHumans() }}
+                    {{ $user->lastLogin->created_at->diffForHumans() }}
                     <span class="text-sm-center">
-                        ({{ $user->ip_address }})
+                        ({{ $user->lastLogin->ip_address }})
                     </span>
                 </td>
             </tr>
