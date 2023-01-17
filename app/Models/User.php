@@ -75,12 +75,14 @@ class User extends Authenticatable
         return $this->hasMany(Login::class);
     }
 
-    public function scopeWithLastLoginAt($query)
+    public function scopeWithLastLoginAt($query): void
     {
-        $query->addSelect(['last_login_at' => Login::query()->select('created_at')
+        $query->addSelect(['last_login_at' =>
+            Login::query()->select('created_at')
                 ->whereColumn('user_id','users.id')
                 ->latest()
                 ->take(1)
+            ,
         ])
         ->withCasts(['last_login_at'=>'datetime']);
     }
