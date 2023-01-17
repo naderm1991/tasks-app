@@ -15,6 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int|mixed $isAdmin
  * @method static orderBy(string $string, string $string1)
  * @method static withLastLoginAt()
+ * @method static select(string[] $array)
  */
 class User extends Authenticatable
 {
@@ -74,7 +75,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Login::class);
     }
-
     public function scopeWithLastLoginAt($query): void
     {
         $query->addSelect(['last_login_at' =>
@@ -85,5 +85,15 @@ class User extends Authenticatable
             ,
         ])
         ->withCasts(['last_login_at'=>'datetime']);
+    }
+    public function scopeWithLastLoginIpAddress($query): void
+    {
+        $query->addSelect(['ip_address' =>
+            Login::query()->select('ip_address')
+                ->whereColumn('user_id','users.id')
+                ->latest()
+                ->take(1)
+            ,
+        ]);
     }
 }

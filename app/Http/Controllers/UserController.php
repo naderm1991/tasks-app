@@ -20,18 +20,14 @@ class UserController extends BaseController
      *
      * @return Application|Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
-//    : \Illuminate\Contracts\View\View|Factory|Application
+    public function index(): \Illuminate\Contracts\View\View|Factory|Application
     {
-        //return "Hello";
-
-        $users = User::
-//            ->select(['id','name','email'])
-            withLastLoginAt()
+        $users = User::select(['id','name','email'])
+            ->withLastLoginAt()
+            ->withLastLoginIpAddress()
             ->orderBy('name')
             ->paginate(15)
         ;
-
         return view('users.index', compact('users'));
     }
 

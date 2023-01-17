@@ -24,7 +24,10 @@
         <tr>
             <th>NAME</th>
             <th>EMAIL</th>
-            <th>LAST LOGIN</th>
+            <th>
+                LAST LOGIN
+            </th>
+
         </tr>
         </thead>
         <tbody>
@@ -32,7 +35,12 @@
             <tr>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->last_login_at->diffForHumans() }}</td>
+                <td>
+                    {{ $user->last_login_at->diffForHumans() }}
+                    <span class="text-sm-center">
+                        ({{ $user->ip_address }})
+                    </span>
+                </td>
             </tr>
         @endforeach
         </tbody>
