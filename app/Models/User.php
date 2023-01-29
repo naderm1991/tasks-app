@@ -78,7 +78,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return BelongsTo
+     * @return HasOne
      */
     public function lastLogin()
     {
