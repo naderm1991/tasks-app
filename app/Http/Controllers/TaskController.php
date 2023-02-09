@@ -25,6 +25,12 @@ class TaskController extends Controller
      */
     public function index(): View|Factory|Application
     {
+        $statuses = (object)[];
+        $statuses->requested = Task::query()->where('status','Requested')->count();
+        $statuses->planened = Task::query()->where('status','Planned')->count();
+        $statuses->completed = Task::query()->where('status','Completed')->count();
+
+
         $tasks = Task::with(['user','admin'])
             ->orderBy('title','desc')
             ->paginate(100)
