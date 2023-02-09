@@ -78,13 +78,13 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function lastLogin(): HasOne
+    public function lastLogin(): BelongsTo
     {
         // this refers to the current model
         // bad approach because: will load all the models
-        return $this->hasOne(Login::class)->latest();
+        return $this->belongsTo(Login::class);
     }
 
     public function scopeWithLastLogin($query)

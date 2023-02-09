@@ -23,8 +23,7 @@ class UserController extends BaseController
     public function index(): \Illuminate\Contracts\View\View|Factory|Application
     {
         $users = User::select(['id','name','email'])
-        //    ->withLastLogin()
-            ->with(['lastLogin'])
+            ->withLastLogin()
             ->orderBy('name')
             ->paginate(15)
         ;
