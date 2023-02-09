@@ -84,10 +84,7 @@ class User extends Authenticatable
     {
         // this refers to the current model
         // bad approach because: will load all the models
-        return $this->hasOne(Login::class)->latest()
-            //todo remove
-            ->limit(1)
-        ;
+        return $this->hasOne(Login::class)->latest();
     }
 
     public function scopeWithLastLogin($query)
