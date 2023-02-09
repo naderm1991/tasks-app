@@ -36,10 +36,13 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    {{ $user->lastLogin->created_at->diffForHumans() }}
-                    <span class="text-sm-center">
+                    {{-- todo remove cond. for scenario testing only--}}
+                    @if($user->lastLogin)
+                        {{ $user->lastLogin->created_at->diffForHumans() }}
+                        <span class="text-sm-center">
                         ({{ $user->lastLogin->ip_address }})
                     </span>
+                    @endif
                 </td>
             </tr>
         @endforeach
