@@ -25,17 +25,18 @@ class TaskController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $statuses = (object)[];
-        $statuses->requested = Task::query()->where('status','Requested')->count();
-        $statuses->planened = Task::query()->where('status','Planned')->count();
-        $statuses->completed = Task::query()->where('status','Completed')->count();
-
-
+        $statuses = Task::query()->toBase()
+            ->selectRaw("count( case when status = 'Requested' then 1 end ) as requested")
+            ->selectRaw("count( case when status = 'Planned' then 1 end ) as planned")
+            ->selectRaw("count( case when status = 'Completed' then 1 end ) as completed")
+            ->selectRaw("count( case when status = '' then 1 end ) as pending")
+            ->first()
+        ;
         $tasks = Task::with(['user','admin'])
             ->orderBy('title','desc')
             ->paginate(100)
         ;
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks','statuses'));
     }
 
     /**
