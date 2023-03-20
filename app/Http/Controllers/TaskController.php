@@ -25,12 +25,11 @@ class TaskController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        // postgres users
         $statuses = Task::query()->toBase()
-            ->selectRaw("count(*) filter (where status = 'Requested')". " as requested")
-            ->selectRaw("count(*) filter (where status = 'Planned')". " as planned")
-            ->selectRaw("count(*) filter (where status = 'Completed')". " as completed")
-            ->selectRaw("count(*) filter (where status = '')". " as pending")
+            ->selectRaw("count( case when status = 'Requested' then 1 end ) as requested")
+            ->selectRaw("count( case when status = 'Planned' then 1 end ) as planned")
+            ->selectRaw("count( case when status = 'Completed' then 1 end ) as completed")
+            ->selectRaw("count( case when status = '' then 1 end ) as pending")
             ->first()
         ;
         $tasks = Task::with(['user','admin'])
