@@ -19,6 +19,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->text,
             'assigned_by_id' => rand(1,500),
             'assigned_to_id' => rand(501,50500),
+            'status' => 'pending'
         ];
     }
 

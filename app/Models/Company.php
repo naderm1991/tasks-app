@@ -11,6 +11,8 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $with = [];
+
     /**
      * Get the comments for the blog post.
      */

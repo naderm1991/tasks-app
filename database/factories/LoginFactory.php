@@ -14,7 +14,8 @@ class LoginFactory extends Factory
     public function definition()
     {
         return [
-            'ip_address'=> $this->faker->ipv4()
+            'ip_address'=> $this->faker->ipv4(),
+            'created_at' => $this->faker->dateTime
         ];
     }
 }

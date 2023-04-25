@@ -2,27 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\BaseController;
-use App\Http\Resources\UserResource;
-use App\Models\Login;
-use App\Models\Task;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class UserController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function index(): \Illuminate\Contracts\View\View|Factory|Application
+    public function index(): View|Factory|Application
     {
-        $users = User::select(['id','name','email'])
+        $users = User::with('company')
+            ->select(['id','name','company_id','email'])
             ->withLastLogin()
             ->orderBy('name')
             ->paginate(15)
@@ -45,3 +42,4 @@ class UserController extends BaseController
         return $this->sendResponse($user, 'Users retrieved successfully.');
     }
 }
+

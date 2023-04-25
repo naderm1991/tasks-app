@@ -28,6 +28,7 @@
                 LAST LOGIN
             </th>
 
+            <th>Company</th>
         </tr>
         </thead>
         <tbody>
@@ -36,11 +37,16 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    {{ $user->lastLogin->created_at->diffForHumans() }}
+                    @if($user->lastLogin)
+                        {{ $user->lastLogin->created_at->diffForHumans() }}
+                    @endif
                     <span class="text-sm-center">
-                        ({{ $user->lastLogin->ip_address }})
+                        @if($user->lastLogin)
+                            ({{ $user->lastLogin->ip_address }})
+                        @endif
                     </span>
                 </td>
+                <td>{{ $user->company->name }}</td>
             </tr>
         @endforeach
         </tbody>

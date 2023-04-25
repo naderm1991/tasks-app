@@ -23,14 +23,14 @@ class DatabaseSeeder extends Seeder
 //        Company::factory(10000)->create()->each(function ($company) {
 //            $company->users()->saveMany(User::factory(5)->make(['is_admin' => 0]));
 //        });
-
-        //Task::factory(500)->create();
+//
+//        Task::factory(500)->create();
 
         $users = User::all();
         foreach ($users as $user) {
-            Login::factory(10)->create(
+            Login::factory(2)->create(
                 [
-                    'user_id'=>$user->id
+                    'user_id'=> $user->id
                 ]
             );
         }
