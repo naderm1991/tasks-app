@@ -24,6 +24,7 @@ class UserController extends BaseController
             ->addSelect(['last_login_id' => \App\Models\Login::query()->select('created_at')
                 ->whereColumn('user_id','users.id')->latest()->take(1)
             ])
+            ->withCasts(['last_login_id' => 'datetime'])
             ->orderBy('name')
             ->paginate(15)
         ;

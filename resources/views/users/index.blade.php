@@ -37,12 +37,14 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
+                    {{ $user->last_login_id->diffForHumans() }}
+
                     @if($user->lastLogin)
-                        {{ $user->lastLogin->created_at->diffForHumans() }}
+{{--                        {{ $user->lastLogin->created_at->diffForHumans() }}--}}
                     @endif
                     <span class="text-sm-center">
                         @if($user->lastLogin)
-                            ({{ $user->lastLogin->ip_address }})
+{{--                            ({{ $user->lastLogin->ip_address }})--}}
                         @endif
                     </span>
                 </td>
