@@ -70,16 +70,6 @@ class User extends Authenticatable
         return $this->hasMany(Login::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function lastLogin(): BelongsTo
-    {
-        // this refers to the current model
-        // bad approach because: will load all the models
-        return $this->belongsTo(Login::class);
-    }
-
     public function scopeWithLastLoginAt($query): void
     {
         $query->addSelect(['last_login_at' => Login::query()
@@ -99,6 +89,21 @@ class User extends Authenticatable
             ->latest()
             ->take(1)
         ]);
+    }
+
+    public function lastLogin(): BelongsTo
+    {
+        return $this->belongsTo(Login::class);
+    }
+
+    public function scopeWithLastLogin($query): void
+    {
+        $query->addSelect(['last_login_id' => Login::query()
+            ->select('id')
+            ->whereColumn('user_id','users.id')
+            ->latest()
+            ->take(1)
+        ])->with('lastLogin');
     }
 
 //    /**

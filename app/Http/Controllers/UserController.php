@@ -20,8 +20,7 @@ class UserController extends BaseController
     {
         $users = User::with('company')
             ->select(['id','name','company_id','email'])
-            ->withLastLoginAt()
-            ->withLastLoginIpAddress()
+            ->withLastLogin()
             ->orderBy('name')
             ->paginate(15)
         ;
