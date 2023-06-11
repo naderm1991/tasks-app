@@ -20,11 +20,7 @@ class UserController extends BaseController
     {
         $users = User::with('company')
             ->select(['id','name','company_id','email'])
-//            ->withLastLogin()
-            ->addSelect(['last_login_id' => \App\Models\Login::query()->select('created_at')
-                ->whereColumn('user_id','users.id')->latest()->take(1)
-            ])
-            ->withCasts(['last_login_id' => 'datetime'])
+            ->withLastLogin()
             ->orderBy('name')
             ->paginate(15)
         ;
