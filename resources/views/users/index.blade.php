@@ -44,7 +44,7 @@
                     @endif
                     <span class="text-sm-center">
                         @if($user->lastLogin)
-                            ({{ $user->last_login_ip_address }})
+                            ({{ $user->lastLogin->ip_address }})
                         @endif
                     </span>
                 </td>
