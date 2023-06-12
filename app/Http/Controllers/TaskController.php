@@ -37,10 +37,13 @@ class TaskController extends Controller
             ;
         }else {
             // MySql
-            $statuses = (Object) [];
-            $statuses->requested = Task::query()->where('status', 'Requested')->count();
-            $statuses->planned = Task::query()->where('status', 'Planned')->count();
-            $statuses->completed = Task::query()->where('status', 'Completed')->count();
+            $statuses = Task::query()->toBase()
+                ->selectRaw("sum(status = 'Requested')". " as requested")
+                ->selectRaw("sum(status = 'Planned')". " as planned")
+                ->selectRaw("sum(status = 'Completed')". " as completed")
+                ->selectRaw("sum(status = 'Pending')". " as pending")
+                ->first()
+            ;
         }
         $tasks = Task::with(['user','admin'])
             ->orderBy('title','desc')
