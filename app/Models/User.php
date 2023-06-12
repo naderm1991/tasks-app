@@ -91,8 +91,14 @@ class User extends Authenticatable
         ]);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function lastLogin(): BelongsTo
     {
+        // wrong way
+        //return $this->hasOne(Login::class)->latest()->take(1);
+        // right way
         return $this->belongsTo(Login::class);
     }
 

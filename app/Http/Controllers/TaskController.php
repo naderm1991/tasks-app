@@ -31,7 +31,7 @@ class TaskController extends Controller
                 ->selectRaw("count(*) filter (where status = 'Requested')". " as requested")
                 ->selectRaw("count(*) filter (where status = 'Planned')". " as planned")
                 ->selectRaw("count(*) filter (where status = 'Completed')". " as completed")
-                ->selectRaw("count(*) filter (where status = '')". " as pending")
+                ->selectRaw("count(*) filter (where status = 'pending')". " as pending")
                 ->first()
             ;
         }else {

@@ -23,6 +23,33 @@
             <p>{{ $message }}</p>
         </div>
     @endif
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>
+                    Requested {{ $statuses->requested }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>
+                    Planned {{ $statuses->planned }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>
+                    Completed {{ $statuses->completed }}
+                </h2>
+            </div>
+        </div>
+    </div>
     <table class="table table-bordered">
         <thead>
         <tr>
