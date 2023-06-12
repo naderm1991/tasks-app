@@ -38,9 +38,9 @@ class TaskController extends Controller
         }else {
             // MySql
             $statuses = (Object) [];
-            $statuses->requested = '-';
-            $statuses->planned = '-';
-            $statuses->completed = '-';
+            $statuses->requested = Task::query()->where('status', 'Requested')->count();
+            $statuses->planned = Task::query()->where('status', 'Planned')->count();
+            $statuses->completed = Task::query()->where('status', 'Completed')->count();
         }
         $tasks = Task::with(['user','admin'])
             ->orderBy('title','desc')
