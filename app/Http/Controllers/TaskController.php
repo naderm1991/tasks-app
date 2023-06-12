@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class TaskController extends Controller
 {
@@ -31,18 +32,15 @@ class TaskController extends Controller
                 ->selectRaw("count(*) filter (where status = 'Requested')". " as requested")
                 ->selectRaw("count(*) filter (where status = 'Planned')". " as planned")
                 ->selectRaw("count(*) filter (where status = 'Completed')". " as completed")
-                ->selectRaw("count(*) filter (where status = 'pending')". " as pending")
+                ->selectRaw("count(*) filter (where status = 'Pending')". " as pending")
                 ->first()
             ;
         }else {
             // MySql
-            $statuses = Task::query()->toBase()
-                ->selectRaw("count( case when status = 'Requested' then 1 end ) as requested")
-                ->selectRaw("count( case when status = 'Planned' then 1 end ) as planned")
-                ->selectRaw("count( case when status = 'Completed' then 1 end ) as completed")
-                ->selectRaw("count( case when status = '' then 1 end ) as pending")
-                ->first()
-            ;
+            $statuses = (Object) [];
+            $statuses->requested = '-';
+            $statuses->planned = '-';
+            $statuses->completed = '-';
         }
         $tasks = Task::with(['user','admin'])
             ->orderBy('title','desc')
