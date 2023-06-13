@@ -58,6 +58,7 @@
             <th>Description</th>
             <th>Assigned Name</th>
             <th>Admin Name</th>
+            <th>Comments</th>
         </tr>
         </thead>
         <tbody>
@@ -67,13 +68,15 @@
                 <td>{{ $task->title }}</td>
                 <td>{{ $task->description }}</td>
                 @if(isset($task->user->name))
-                <td>
-                    {{$task->user->name }}
-                </td>
+                    <td>{{$task->user->name }}</td>
                 @endif
                 @if(isset($task->admin->name))
                     <td>{{$task->admin->name}}</td>
                 @endif
+                <td>
+                    <div>comment 1</div>
+                    <div>comment 2</div>
+                </td>
             </tr>
         @endforeach
         </tbody>

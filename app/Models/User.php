@@ -47,7 +47,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //protected $with = ['company'];
+//    protected $with = [];
 
     public static function search($term,$is_admin=0): Collection
     {
@@ -109,7 +109,7 @@ class User extends Authenticatable
             ->whereColumn('user_id','users.id')
             ->latest()
             ->take(1)
-        ])->with('lastLogin');
+        ])->with('lastLogin:id,ip_address,created_at');
     }
 
 //    /**

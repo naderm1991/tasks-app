@@ -18,7 +18,8 @@ class UserController extends BaseController
      */
     public function index(): View|Factory|Application
     {
-        $users = User::with('company')
+        $users = User::query()
+            ->with('company')
             ->select(['id','name','company_id','email'])
             ->withLastLogin()
             //->with('lastLogin')
