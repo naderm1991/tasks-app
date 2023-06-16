@@ -44,11 +44,24 @@ class TaskController extends Controller
                 ->first()
             ;
         }
-        $tasks = Task::with(['user','admin'])
-            ->orderBy('title','desc')
+        $tasks = Task::with(['user','assignedTo'])
+            ->orderBy('id')
             ->paginate(100)
         ;
         return view('tasks.index', compact('tasks','statuses'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Task $task
+     * @return Application|Factory|View
+     */
+    public function show(Task $task): View|Factory|Application
+    {
+        $task->load('comments.user');
+        $task->comments->each->setRelation('task',$task);
+        return view('tasks.show',['task'=>$task]);
     }
 
     /**
@@ -75,17 +88,6 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')
             ->with('success','Task has been created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Task $task
-     * @return Application|Factory|View
-     */
-    public function show(Task $task)
-    {
-        return view('tasks.show',compact('task'));
     }
 
     /**

@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\DB;
  * @property string $status
  * @property-read User|null $admin
  * @property-read User|null $user
+ * @property mixed $comments
  * @method static TaskFactory factory(...$parameters)
  * @method static Builder|Task newModelQuery()
  * @method static Builder|Task newQuery()
@@ -43,19 +44,20 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'assigned_by_id','assigned_to_id'];
+    protected $fillable = ['title', 'description','assigned_to_id'];
 
-    public function admin(): BelongsTo
+    // todo remove this for testing
+    protected $with = ['user','comments'];
+
+    public function assignedTo(): BelongsTo
     {
-        return $this->belongsTo(
-            User::class,'assigned_by_id','id');
+        return $this->belongsTo(User::class,'assigned_to_id','id');
 //        return $this->belongsToMany(User::class,'tasks','id', 'assigned_by_id');
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(
-            User::class,'assigned_to_id','id');
+        return $this->belongsTo(User::class);
     }
 
     static function userTasksCount(): \Illuminate\Support\Collection
@@ -68,5 +70,10 @@ class Task extends Model
             ->limit(10)
             ->get()
         ;
+    }
+
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class)->orderBy('created_at');
     }
 }

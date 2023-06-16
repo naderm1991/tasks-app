@@ -27,7 +27,7 @@
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>
-                    Requested {{ $statuses->requested }}
+{{--                    Requested {{ $statuses->requested }}--}}
                 </h2>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>
-                    Planned {{ $statuses->planned }}
+{{--                    Planned {{ $statuses->planned }}--}}
                 </h2>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>
-                    Completed {{ $statuses->completed }}
+{{--                    Completed {{ $statuses->completed }}--}}
                 </h2>
             </div>
         </div>
@@ -62,35 +62,25 @@
         </tr>
         </thead>
         <tbody>
-        @foreach ($tasks as $task)
             <tr>
                 <td>{{ $task->id }}</td>
                 <td>{{ $task->title }}</td>
                 <td>{{ $task->description }}</td>
-                @if(isset($task->user->name))
-                    <td>{{$task->user->name }}</td>
-                @endif
-                @if(isset($task->assignedTo->name))
-                    <td>{{$task->assignedTo->name}}</td>
-                @endif
+{{--                <td>{{$task->user->name }}</td>--}}
                 <td>
                     @foreach($task->comments as $comment)
-                         <div>
+                        -  <div>
                             @if($comment->isAuthor())
                                 <hgroup>Admin:</hgroup>
                             @endif
-                                {{ $comment->user->name }}:
-
-                            {{ $comment->content }} ({{ $comment->created_at->diffForHumans() }})<br>
-                             ------------------------------
-                        </div>
+                            Name:{{ $comment->user->name }} / {{ $comment->content }} ({{ $comment->created_at->diffForHumans() }})
+                         </div>
                     @endforeach
                 </td>
             </tr>
-        @endforeach
         </tbody>
     </table>
-    {{ $tasks->links('pagination::bootstrap-4') }}
+{{--    {{ $tasks->links('pagination::bootstrap-4') }}--}}
 </div>
 </body>
 </html>

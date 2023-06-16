@@ -112,6 +112,10 @@ class User extends Authenticatable
         ])->with('lastLogin:id,ip_address,created_at');
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
 //    /**
 //     * @param $query
 //     * @return UserBuilder
