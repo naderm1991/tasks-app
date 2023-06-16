@@ -47,7 +47,7 @@ class Task extends Model
     protected $fillable = ['title', 'description','assigned_to_id'];
 
     // todo remove this for testing
-    protected $with = ['user','comments'];
+//    protected $with = ['user','comments'];
 
     public function assignedTo(): BelongsTo
     {

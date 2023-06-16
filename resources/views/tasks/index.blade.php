@@ -76,9 +76,9 @@
                 <td>
                     @foreach($task->comments as $comment)
                          <div>
-                            @if($comment->isAuthor())
+{{--                            @if($comment->isAuthor())--}}
                                 <hgroup>Admin:</hgroup>
-                            @endif
+{{--                            @endif--}}
                                 {{ $comment->user->name }}:
 
                             {{ $comment->content }} ({{ $comment->created_at->diffForHumans() }})<br>

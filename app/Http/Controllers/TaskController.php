@@ -44,7 +44,7 @@ class TaskController extends Controller
                 ->first()
             ;
         }
-        $tasks = Task::with(['user','assignedTo'])
+        $tasks = Task::with(['user','assignedTo','comments.user'])
             ->orderBy('id')
             ->paginate(100)
         ;
@@ -59,8 +59,8 @@ class TaskController extends Controller
      */
     public function show(Task $task): View|Factory|Application
     {
-        $task->load('comments.user');
-        $task->comments->each->setRelation('task',$task);
+        $task->load('comments.user','comments.task.comments');
+//        $task->comments->each->setRelation('task',$task);
         return view('tasks.show',['task'=>$task]);
     }
 
