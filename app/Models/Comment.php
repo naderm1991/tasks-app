@@ -30,6 +30,8 @@ class Comment extends Model
 
     public function isAuthor(): bool
     {
+        // q: this->task->comments->first()->user_id what this means?
+        // a: this means the first comment of the task
         return $this->task->comments->first()->user_id === $this->user_id;
     }
 }

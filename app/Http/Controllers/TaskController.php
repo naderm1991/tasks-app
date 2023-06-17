@@ -59,7 +59,7 @@ class TaskController extends Controller
      */
     public function show(Task $task): View|Factory|Application
     {
-        $task->load('comments.user');
+//        $task->load('comments.user');
 
         // wrong way
         //$task->load('comments.user','comments.task.comments');
