@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
  * @property string $status
  * @property-read User|null $admin
  * @property-read User|null $user
- * @property mixed $comments
+ * @property HasMany $comments
  * @method static TaskFactory factory(...$parameters)
  * @method static Builder|Task newModelQuery()
  * @method static Builder|Task newQuery()
