@@ -116,17 +116,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
-//    /**
-//     * @param $query
-//     * @return UserBuilder
-//     */
-//    public function newEloquentBuilder($query): UserBuilder
-//    {
-//        return new UserBuilder($query);
-//    }
-//
-//    public static function query() : UserBuilder
-//    {
-//        return UserBuilder::query();
-//    }
+
+    public function scopeSearch($query, string $term = null): void
+    {
+        collect(explode(' ', $term))->filter()->each(function (string $term) use ($query) {
+            $term = "%{$term}%";
+            $query->where(function ($query) use ($term) {
+                $query
+                    ->where('name', 'like', $term)
+//                    ->where('first_name', 'like', "%{$term}%")
+//                    ->orWhere('last_name', 'like', "%{$term}%")
+                    ->orWhereHas('company', function ($query) use ($term) {
+                        $query->where('name', 'like', $term);
+                    })
+                ;
+            });
+        });
+    }
 }

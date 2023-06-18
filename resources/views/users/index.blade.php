@@ -19,7 +19,7 @@
 <body>
 <div class="container mt-2">
     <label for="site-search">Search the site:</label>
-    <input type="text" id="site-search" name="q">
+    <input type="text" id="site-search" name="q" value="{{request('search')}}">
     <button class="searchButton">Search</button>
 
     <div class="row">
@@ -85,7 +85,7 @@
             if(e.keyCode===13)
             {
                 let textVal = $("input:text[name=q]").val();
-                let value = "?q=" + textVal;
+                let value = "?search=" + textVal;
                 location.href = "{{url('users')}}" + value;
             }
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -19,14 +20,15 @@ class UserController extends BaseController
     public function index(): View|Factory|Application
     {
         $users = User::query()
+            ->search(request('search'))
             ->with('company')
             ->select(['id','name','company_id','email'])
             ->withLastLogin()
             //->with('lastLogin')
             ->orderBy('name')
-            ->paginate(15)
+            ->paginate()
         ;
-        return view('users.index', compact('users'));
+        return view('users.index', ['users' => $users]);
     }
 
     /**
