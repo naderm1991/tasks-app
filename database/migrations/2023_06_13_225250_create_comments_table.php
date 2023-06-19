@@ -13,16 +13,16 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->id();
-            $table->text('content');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('task_id');
-            $table->timestamps();
-            // Add foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('task_id')->references('id')->on('task')->onDelete('cascade');
-        });
+//        Schema::create('comments', function (Blueprint $table) {
+//            $table->id();
+//            $table->text('content');
+//            $table->unsignedBigInteger('user_id');
+//            $table->unsignedBigInteger('task_id');
+//            $table->timestamps();
+//            // Add foreign key constraints
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+//            $table->foreign('task_id')->references('id')->on('task')->onDelete('cascade');
+//        });
     }
 
     /**

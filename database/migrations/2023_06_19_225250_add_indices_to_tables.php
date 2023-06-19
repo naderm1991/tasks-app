@@ -13,15 +13,9 @@ class AddIndicesToTables extends Migration
      */
     public function up(): void
     {
-        // Add indices to user table
-        Schema::table('users', function (Blueprint $table) {
-            $table->index('name');
-            $table->index('email');
-        });
-
-        Schema::table('company', function (Blueprint $table) {
-            $table->index('name');
-        });
+//        Schema::table('companies', function (Blueprint $table) {
+//            $table->index('name');
+//        });
     }
 
     /**

@@ -120,7 +120,7 @@ class User extends Authenticatable
     public function scopeSearch($query, string $term = null): void
     {
         collect(explode(' ', $term))->filter()->each(function (string $term) use ($query) {
-            $term = "%{$term}%";
+            $term = $term.'%';
             $query->where(function ($query) use ($term) {
                 $query
                     ->where('name', 'like', $term)
