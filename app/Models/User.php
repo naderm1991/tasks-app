@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Builders\UserBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -119,7 +118,8 @@ class User extends Authenticatable
 
     public function scopeSearch($query, string $term = null): void
     {
-        collect(str_getcsv($term,' ','"'))->filter()->each(function (string $term) use ($query) {$term = $term.'%';
+        collect(str_getcsv($term,' ','"'))->filter()->each(function (string $term) use ($query) {
+            $term = $term.'%';
             $query->where(function ($query) use ($term) {
                 $query
                     ->where('users.name', 'like', $term)
