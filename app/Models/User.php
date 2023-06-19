@@ -119,12 +119,13 @@ class User extends Authenticatable
 
     public function scopeSearch($query, string $term = null): void
     {
+        $query->join('companies', 'companies.id', '=', 'users.company_id');
         collect(str_getcsv($term,' ','"'))->filter()->each(function (string $term) use ($query) {$term = $term.'%';
             $query->where(function ($query) use ($term) {
                 $query
-                    ->where('name', 'like', $term)
+                    ->where('users.name', 'like', $term)
                     ->orWhereHas('company', function ($query) use ($term) {
-                        $query->where('name', 'like', $term);
+                        $query->where('companies.name', 'like', $term);
                     })
                 ;
             });
