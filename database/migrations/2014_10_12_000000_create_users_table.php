@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             // de-normalization // caching
             //$table->foreignId('last_login_id')->constrained('logins');
             $table->timestamps();
+            $table->string('first_name')->index();
+            $table->string('last_name')->index();
         });
     }
 

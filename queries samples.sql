@@ -91,3 +91,55 @@ where
     (`users`.`name` like 'Kennedy%' or `company_id` in (4720,3365,9997))
 
 order by `name` asc limit 15 offset 0;
+
+_____________________
+
+Lesson 11 - Using UNIONs to run queries independently
+
+select * from `users` where `first_name` like 'Kennedy%' or last_name like 'Kennedy%'
+
+explain select * from `users` where ``.`name` like 'Kennedy%';
+
+explain
+select *
+from users
+inner join companies on users.company_id = companies.id
+where companies.name like 'Kennedy%';
+
+explain
+select *
+from users
+where first_name like 'Kennedy%' or last_name like 'Kennedy%'
+
+union
+
+select user.*
+from users
+inner join companies on users.company_id = companies.id
+where companies.name like 'bill%';
+
+-- wrong way to do it
+explain select * from `users` where id in (
+select id
+from `users`
+where `first_name` like 'Kennedy%' or `last_name` like 'Kennedy%'
+union
+select users.id
+from `users`
+inner join `companies` on `users`.`company_id` = `companies`.`id`
+where `companies`.`name` like 'Kennedy%'
+)
+-- right way to do it "derived table"
+
+explain select * from `users` where id in (
+select id from (select id
+                    from `users`
+                    where `first_name` like 'Kennedy%'
+                       or `last_name` like 'Kennedy%'
+                    union
+                    select users.id
+                    from `users`
+                             inner join `companies` on `users`.`company_id` = `companies`.`id`
+                    where `companies`.`name` like 'Kennedy%'
+    ) as matches
+)

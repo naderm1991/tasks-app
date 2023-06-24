@@ -123,11 +123,10 @@ class User extends Authenticatable
             $query->where(function ($query) use ($term) {
                 $query
                     ->where('users.name', 'like', $term)
-                    ->orWhereIn('company_id', function ($query) use ($term) {
-                        $query->select('id')
-                            ->from('companies')
-                            ->where('companies.name', 'like', $term);
-                    })
+                    ->orWhereIn('company_id', Company::query()
+                        ->where('name', 'like', $term)
+                        ->pluck('id')
+                    )
                 ;
             });
         });

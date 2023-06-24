@@ -18,12 +18,13 @@ class UserController extends BaseController
      */
     public function index(): View|Factory|Application
     {
+        //todo check the load time without the queries
         $users = User::query()
             ->search(request('search'))
-            ->with('company')
+            ->with('company:id,name')
             ->select(['users.id','users.name','company_id','email'])
             ->withLastLogin()
-            //->with('lastLogin')
+            ->with('lastLogin')
             ->orderBy('name')
             ->paginate()
         ;
