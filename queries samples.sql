@@ -34,7 +34,7 @@ where
 order by `name` asc limit 15 offset 0
 
 
----------------
+-------------------------------------------------------------------------------
 
 
 select
@@ -47,22 +47,18 @@ where (`users`.`name` like 'Kennedy%' or `company_id` in (select `id` from `comp
 
 and (`users`.`name` like 'Aaliyah Abernathy%' or `company_id` in (select `id` from `companies` where `companies`.`name` like 'Aaliyah Abernathy%')) order by `name` asc limit 15 offset 0
 
--------------
-
-Lesson 10 - When it makes sense to run additional queries
+________________________________________________________________________________
 
 
 select
 `users`.`id`, `users`.`name`, `company_id`, `email`, (select `id` from `logins` where `user_id` = `users`.`id` order by `created_at` desc limit 1) as `last_login_id`
 from `users` where
 (
-
-    `users`.`name` like 'Aaliyah Abernathy%' or `company_id` in ( select `id` from `companies` where `companies`.`name` like 'Aaliyah Abernathy%')
+ `users`.`name` like 'Aaliyah Abernathy%' or `company_id` in ( select `id` from `companies` where `companies`.`name` like 'Aaliyah Abernathy%')
 )
 order by `name` asc limit 15 offset 0
 
-
-----
+# use "and"
 
 select
 
@@ -75,12 +71,12 @@ and
 
 order by `name` asc limit 15 offset 0
 
---------
+_________________________________________________
+
+# "Lesson 10 - When it makes sense to run additional queries"
 
 
 select `id` from `companies` where `companies`.`name` like 'Kennedy%'
-
------
 
 select
 `users`.`id`, `users`.`name`, `company_id`, `email`, (select `id` from `logins` where `user_id` = `users`.`id` order by `created_at` desc limit 1) as `last_login_id`
@@ -94,19 +90,17 @@ order by `name` asc limit 15 offset 0;
 
 _____________________
 
-Lesson 11 - Using UNIONs to run queries independently
+# "Lesson 11 - Using UNIONs to run queries independently"
+
+# used queries
 
 select * from `users` where `first_name` like 'Kennedy%' or last_name like 'Kennedy%'
 
-explain select * from `users` where ``.`name` like 'Kennedy%';
+select * from `users` where ``.`name` like 'Kennedy%';
 
-explain
-select *
-from users
-inner join companies on users.company_id = companies.id
-where companies.name like 'Kennedy%';
+select * from users inner join companies on users.company_id = companies.id where companies.name like 'Kennedy%';
 
-explain
+# "use unions"
 select *
 from users
 where first_name like 'Kennedy%' or last_name like 'Kennedy%'
@@ -119,6 +113,7 @@ inner join companies on users.company_id = companies.id
 where companies.name like 'bill%';
 
 -- wrong way to do it
+# "use unions inside of in subquery"
 explain select * from `users` where id in (
 select id
 from `users`
@@ -129,8 +124,9 @@ from `users`
 inner join `companies` on `users`.`company_id` = `companies`.`id`
 where `companies`.`name` like 'Kennedy%'
 )
--- right way to do it "derived table"
 
+-- right way to do it "derived table"
+# use "unions and derived table"
 explain select * from `users` where id in (
 select id from (select id
                     from `users`
@@ -142,4 +138,4 @@ select id from (select id
                              inner join `companies` on `users`.`company_id` = `companies`.`id`
                     where `companies`.`name` like 'Kennedy%'
     ) as matches
-)
+);

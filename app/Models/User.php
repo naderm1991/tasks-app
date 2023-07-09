@@ -118,11 +118,19 @@ class User extends Authenticatable
 
     public function scopeSearch($query, string $term = null): void
     {
+        // when you use a company model, you will create a separated query
         collect(str_getcsv($term,' ','"'))->filter()->each(function (string $term) use ($query) {
             $term = $term.'%';
+
+            // where in
+                // derived table
+                    // find users by first nad last name
+                    // union
+                    // find users by company name
+
             $query->where(function ($query) use ($term) {
-                $query
-                    ->where('users.name', 'like', $term)
+                $query->where('first_name', 'like', $term)
+                    ->orWhereIn('last_name', 'like',$term)
                     ->orWhereIn('company_id', Company::query()
                         ->where('name', 'like', $term)
                         ->pluck('id')
