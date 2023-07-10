@@ -94,11 +94,13 @@ _____________________
 
 # used queries
 
-select * from `users` where `first_name` like 'Kennedy%' or last_name like 'Kennedy%'
-
-select * from `users` where ``.`name` like 'Kennedy%';
+select * from `users` where `first_name` like 'Kennedy%' or last_name like 'Kennedy%';
 
 select * from users inner join companies on users.company_id = companies.id where companies.name like 'Kennedy%';
+
+explain: the queries
+
+select users.* from users inner join companies on users.company_id = companies.id where companies.name like 'Kennedy%';
 
 # "use unions"
 select *
@@ -138,4 +140,31 @@ select id from (select id
                              inner join `companies` on `users`.`company_id` = `companies`.`id`
                     where `companies`.`name` like 'Kennedy%'
     ) as matches
+);
+
+-- with and
+explain select * from `users` where
+id in (
+    select id from (select id
+                    from `users`
+                    where `first_name` like 'Kennedy%'
+                       or `last_name` like 'Kennedy%'
+                    union
+                    select users.id
+                    from `users`
+                             inner join `companies` on `users`.`company_id` = `companies`.`id`
+                    where `companies`.`name` like 'Kennedy%'
+    ) as matches
+)
+and id in (
+   select id from (
+        select id
+        from `users`
+        where `first_name` like 'microsoft%' or `last_name` like 'microsoft%'
+        union
+        select users.id
+        from `users`
+        inner join `companies` on `users`.`company_id` = `companies`.`id`
+        where `companies`.`name` like 'microsoft%'
+        ) as matches
 );
