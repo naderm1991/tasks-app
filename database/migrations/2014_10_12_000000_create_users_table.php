@@ -15,7 +15,12 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
+            $table->string('name');
+            $table
+                ->string('name_normalized')
+                ->virtualAs("regexp_replace(name, '[^A-Za-z0-9]', '')")
+                ->index()
+            ;
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -24,8 +29,18 @@ class CreateUsersTable extends Migration
             // de-normalization // caching
             //$table->foreignId('last_login_id')->constrained('logins');
             $table->timestamps();
-            $table->string('first_name')->index();
-            $table->string('last_name')->index();
+            $table->string('first_name');
+            $table
+                ->string('first_name_normalized')
+                ->virtualAs("regexp_replace(first_name, '[^A-Za-z0-9]', '')")
+                ->index()
+            ;
+            $table->string('last_name');
+            $table
+                ->string('last_name_normalized')
+                ->virtualAs("regexp_replace(last_name, '[^A-Za-z0-9]', '')")
+                ->index()
+            ;
         });
     }
 
