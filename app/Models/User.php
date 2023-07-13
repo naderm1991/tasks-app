@@ -120,7 +120,7 @@ class User extends Authenticatable
     {
         // when you use a company model, you will create a separated query
         collect(str_getcsv($term,' ','"'))->filter()->each(function (string $term) use ($query) {
-            $term = $term.'%';
+            $term = preg_replace('/[^A-Za-z0-9]/', '', $term).'%';
             // where in
             $query->whereIn('id', function ($query) use ($term) {
                 // derived table
@@ -129,15 +129,18 @@ class User extends Authenticatable
                         $query->select('id')
                             // find users by first nad last name
                             ->from('users')
-                            ->where('name','like',$term)
-                            //->orWhere('last_name','like',$term)
+                            ->whereRaw("regexp_replace(name,'[^A-Za-z0-9]','') like ?",[$term])
+                            ->orWhereRaw("regexp_replace(first_name,'[^A-Za-z0-9]','') like ?",[$term])
+                            ->orWhereRaw("regexp_replace(last_name,'[^A-Za-z0-9]','') like ?",[$term])
                             // union // find users by company name
                             ->union(
-                                $query->newQuery()
+                                (
+                                    $query->newQuery()
                                     ->select('users.id')
                                     ->from('users')
                                     ->join('companies','companies.id','=','users.company_id')
-                                    ->where('companies.name','like',$term)
+                                    ->whereRaw("regexp_replace(companies.name,'[^A-Za-z0-9]','') like ?",[$term])
+                                )
                             )
                         ;
                     }, 'matches')
