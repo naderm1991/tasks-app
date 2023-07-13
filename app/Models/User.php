@@ -127,9 +127,11 @@ class User extends Authenticatable
                 $query->select('id')
                     ->from(function ($query) use ($term){
                         $query->select('id')
+                            // find users by first nad last name
                             ->from('users')
-                            ->where('first_name','like',$term)
-                            ->orWhere('last_name','like',$term)
+                            ->where('name','like',$term)
+                            //->orWhere('last_name','like',$term)
+                            // union // find users by company name
                             ->union(
                                 $query->newQuery()
                                     ->select('users.id')
@@ -141,9 +143,6 @@ class User extends Authenticatable
                     }, 'matches')
                 ;
             });
-            // find users by first nad last name
-            // union
-            // find users by company name
         });
     }
 }
