@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Comment::factory(10)->create();
         Company::factory(100)->create()->each(function ($company) {
             $company->users()->saveMany(User::factory(5)->make(['is_admin' => 1]));
         });
@@ -36,5 +35,8 @@ class DatabaseSeeder extends Seeder
                 ]
             );
         }
+
+        Comment::factory(10)->create();
+
     }
 }

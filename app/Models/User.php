@@ -48,14 +48,7 @@ class User extends Authenticatable
 
 //    protected $with = [];
 
-    public static function search($term,$is_admin=0): Collection
-    {
-        return DB::table('users')
-            ->where('name', 'like',"%".$term."%")
-            ->where('is_admin',$is_admin)
-            ->get(['id','name','is_admin'])
-        ;
-    }
+
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class,'assigned_to_id');
@@ -129,9 +122,9 @@ class User extends Authenticatable
                         $query->select('id')
                             // find users by first nad last name
                             ->from('users')
-                            ->whereRaw("regexp_replace(name,'[^A-Za-z0-9]','') like ?",[$term])
-                            ->orWhereRaw("regexp_replace(first_name,'[^A-Za-z0-9]','') like ?",[$term])
-                            ->orWhereRaw("regexp_replace(last_name,'[^A-Za-z0-9]','') like ?",[$term])
+                            ->where('name_normalized','like',$term)
+                            ->orWhere('first_name_normalized','like',$term)
+                            ->orWhere('last_name_normalized','like',$term)
                             // union // find users by company name
                             ->union(
                                 (
@@ -139,7 +132,7 @@ class User extends Authenticatable
                                     ->select('users.id')
                                     ->from('users')
                                     ->join('companies','companies.id','=','users.company_id')
-                                    ->whereRaw("regexp_replace(companies.name,'[^A-Za-z0-9]','') like ?",[$term])
+                                    ->where('companies.name_normalized','like',$term)
                                 )
                             )
                         ;
