@@ -9,7 +9,6 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class CustomerPolicy
 {
     use HandlesAuthorization;
-
     public function view(User $user,Customer $customer): bool
     {
         // if the user is the owner of the company or the sales rep of the customer

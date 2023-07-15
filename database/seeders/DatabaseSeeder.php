@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        Comment::factory(10)->create();
+        // todo fix migratino issues related to comments before uncomment this line
+        //Comment::factory(1)->create();
 
         Customer::factory(100)->create();
     }
