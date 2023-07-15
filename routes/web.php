@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -25,3 +26,4 @@ Route::resource('users', UserController::class);
 Route::get('user/search', [UserController::class, 'search'])->name('users.search');
 Route::get('statistics/user_tasks_count', [StatisticsController::class, 'userTasksCount'])->name('statistics.tasks');
 Route::get('statistics/tasks_years', [StatisticsController::class, 'tasksPerYear'])->name('statistics.tasks');
+Route::resource('customers', CustomerController::class);

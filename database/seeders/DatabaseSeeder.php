@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Comment;
 use App\Models\Company;
+use App\Models\Customer;
 use App\Models\Login;
 use App\Models\Task;
 use App\Models\User;
@@ -38,5 +39,6 @@ class DatabaseSeeder extends Seeder
 
         Comment::factory(10)->create();
 
+        Customer::factory(100)->create();
     }
 }

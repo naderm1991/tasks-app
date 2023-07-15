@@ -2,17 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tasks App</title>
+    <title>Customers</title>
     <style>
         label {
             display: block;
             font: 1rem 'Fira Sans', sans-serif;
         }
-
-        input,
-        label {
-          a  margin: 0.4rem 0;
-        }
+        input
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
 </head>
@@ -25,7 +21,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Users</h2>
+                <h2>Customers</h2>
             </div>
         </div>
     </div>
@@ -37,40 +33,27 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>EMAIL</th>
-            <th>
-                LAST LOGIN
-            </th>
-
-            <th>Company</th>
+            <th>COMPANY</th>
+            <th>CITY</th>
+            <th>SALES REPRESENTATIVE</th>
         </tr>
         </thead>
         <tbody>
-        @foreach ($users as $user)
+        @foreach ($customers as $customer)
+            {{--  can the current view this customer --}}
+            @can('view', $customer)
             <tr>
-                <td>{{ $user->id }}</td>
-                <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>
-{{--                    {{ $user->last_login_at->diffForHumans() }}--}}
-
-                    @if($user->lastLogin)
-                        {{ $user->lastLogin->created_at->diffForHumans() }}
-                    @endif
-                    <span class="text-sm-center">
-                        @if($user->lastLogin)
-                            ({{ $user->lastLogin->ip_address }})
-                        @endif
-                    </span>
+                <td>{{ $customer->name }}</td>
+                <td>{{ $customer->city }}, {{ $customer->state }}</td>
+                <td>{{ $customer->salesRep->name }}
+                    @if($customer->salesRep->is_owner ) (Owner) @endif
                 </td>
-                <td>{{ $user->company->name }}</td>
             </tr>
+            @endcan
         @endforeach
         </tbody>
     </table>
-    {{ $users->links('pagination::bootstrap-4') }}
+    {{ $customers->links('pagination::bootstrap-4') }}
 </div>
 </body>
 </html>

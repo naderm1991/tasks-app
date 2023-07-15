@@ -29,7 +29,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             // de-normalization // caching
             //$table->foreignId('last_login_id')->constrained('logins');
-            $table->timestamps();
             $table->string('first_name');
             $table
                 ->string('first_name_normalized')
@@ -42,6 +41,8 @@ class CreateUsersTable extends Migration
                 ->virtualAs("regexp_replace(last_name, '[^A-Za-z0-9]', '')")
                 ->index()
             ;
+            $table->timestamps();
+            $table->boolean('is_owner')->default(false);
         });
     }
 

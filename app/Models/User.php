@@ -11,6 +11,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property int id
+ * @property bool is_owner
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
