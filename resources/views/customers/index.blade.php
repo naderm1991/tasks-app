@@ -41,7 +41,7 @@
         <tbody>
         @foreach ($customers as $customer)
             {{--  can the current view this customer --}}
-            @can('view', $customer)
+            {{--@can('view', $customer)--}}
             <tr>
                 <td>{{ $customer->name }}</td>
                 <td>{{ $customer->city }}, {{ $customer->state }}</td>
@@ -49,11 +49,11 @@
                     @if($customer->salesRep->is_owner ) (Owner) @endif
                 </td>
             </tr>
-            @endcan
+            {{--@endcan--}}
         @endforeach
         </tbody>
     </table>
-    {{ $customers->links('pagination::bootstrap-4') }}
+{{--    {{ $customers->links('pagination::bootstrap-4') }}--}}
 </div>
 </body>
 </html>
