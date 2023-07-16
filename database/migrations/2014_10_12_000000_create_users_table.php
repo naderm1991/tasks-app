@@ -43,6 +43,7 @@ class CreateUsersTable extends Migration
             ;
             $table->timestamps();
             $table->boolean('is_owner')->default(false);
+            $table->index(['last_name','first_name']);
         });
     }
 

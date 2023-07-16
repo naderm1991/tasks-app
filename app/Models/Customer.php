@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -48,8 +49,16 @@ class Customer extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function salesRep(){
+    public function salesRep(): BelongsTo
+    {
         return $this->belongsTo(User::class, 'sales_rep_id');
     }
 
+    public function scopeVisibleTo($query, User $user)
+    {
+        if ($user->is_owner) {
+            return $query;
+        }
+        return $query->where('sales_rep_id', $user->id);
+    }
 }

@@ -25,7 +25,9 @@ class UserController extends BaseController
             ->select(['users.id','users.first_name','users.last_name','users.name','company_id','email'])
             ->withLastLogin()
             ->with('lastLogin')
-            ->orderBy('name')
+//            ->orderBy('name')
+            ->orderBy('last_name')
+            ->orderBy('first_name')
             ->paginate()
         ;
         return view('users.index', ['users' => $users]);
