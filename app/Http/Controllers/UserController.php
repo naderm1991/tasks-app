@@ -20,14 +20,17 @@ class UserController extends BaseController
     {
         //todo check the load time without the queries
         $users = User::query()
-            ->search(request('search'))
+//            ->search(request('search'))
+            ->select(['users.*'])
+            ->join('companies', 'companies.id', '=', 'users.company_id')
+//            ->withLastLogin()
             ->with('company:id,name')
-            ->select(['users.id','users.first_name','users.last_name','users.name','company_id','email'])
-            ->withLastLogin()
             ->with('lastLogin')
+            ->orderBy('companies.name')
 //            ->orderBy('name')
-            ->orderBy('last_name')
-            ->orderBy('first_name')
+//            ->orderBy('last_name')
+//            ->orderBy('first_name')
+
             ->paginate()
         ;
         return view('users.index', ['users' => $users]);
