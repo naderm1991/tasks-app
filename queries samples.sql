@@ -177,3 +177,8 @@ explain select
 `users`.`id`, `users`.`first_name`, `users`.`last_name`, `users`.`name`, `company_id`, `email`,(select `id` from `logins` where `user_id` = `users`.`id` order by `created_at` desc limit 1) as `last_login_id`
 from `users` order by `name` asc, `last_name` asc, `first_name` asc limit 15 offset 0
 ;
+
+select `users`.* from `users` order by (select `name` from `companies` where `id` = `users`.`company_id` order by `name` asc) asc limit 15 offset 0
+
+
+select `users`.* from `users` inner join `companies` on `companies`.`id` = `users`.`company_id` order by `companies`.`name` asc limit 15 offset 0
