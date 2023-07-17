@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -20,17 +21,14 @@ class UserController extends BaseController
     {
         //todo check the load time without the queries
         $users = User::query()
-//            ->search(request('search'))
             ->select(['users.*'])
-            ->join('companies', 'companies.id', '=', 'users.company_id')
-//            ->withLastLogin()
-            ->with('company:id,name')
-            ->with('lastLogin')
-            ->orderBy('companies.name')
-//            ->orderBy('name')
-//            ->orderBy('last_name')
-//            ->orderBy('first_name')
-
+            ->orderBy(
+                (
+                    Company::query()->select('name')
+                    ->whereColumn('id', 'users.company_id')
+                    ->orderBy('name')
+                )
+            )
             ->paginate()
         ;
         return view('users.index', ['users' => $users]);
