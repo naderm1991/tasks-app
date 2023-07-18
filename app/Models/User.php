@@ -14,6 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @property int id
  * @property bool is_owner
+ * @method withLastLogin()
  */
 class User extends Authenticatable
 {
