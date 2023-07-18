@@ -53,6 +53,8 @@
         @endforeach
         </tbody>
     </table>
+    {{$customers->total()}}
+
     {{ $customers->links('pagination::bootstrap-4') }}
 </div>
 </body>

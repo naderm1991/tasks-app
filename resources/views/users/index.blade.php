@@ -70,6 +70,7 @@
         @endforeach
         </tbody>
     </table>
+    {{$users->total()}}
     {{ $users->links('pagination::bootstrap-4') }}
 </div>
 </body>
