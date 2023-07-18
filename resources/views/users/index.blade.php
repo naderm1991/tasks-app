@@ -65,7 +65,7 @@
                         @endif
                     </span>
                 </td>
-                <td>{{ $user->company->name }}</td>
+{{--                <td>{{ $user->company->name }}</td>--}}
             </tr>
         @endforeach
         </tbody>

@@ -23,7 +23,8 @@ class UserController extends BaseController
         $users = User::query()
             ->select('users.*')
             ->join('logins', 'logins.user_id', '=', 'users.id')
-            ->orderBy('logins.created_at')
+            ->orderBy( 'logins.created_at')
+            ->groupBy('users.id')
             ->withLastLogin()
             ->paginate()
         ;

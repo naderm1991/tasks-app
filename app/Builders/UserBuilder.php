@@ -13,14 +13,14 @@ class UserBuilder extends Builder
         return UserBuilder::query();
     }
 
-    public function withLastLogin(): static
-    {
-        $this
-            ->addSelect( ['last_login_id' => Login::query()->select('id')
-                ->whereColumn('user_id','users.id')->latest()->take(1)])
-            ->with('lastLogin')
-        ;
-
-        return $this;
-    }
+//    public function withLastLogin(): static
+//    {
+//        $this
+//            ->addSelect( ['last_login_id' => Login::query()->select('id')
+//                ->whereColumn('user_id','users.id')->latest()->take(1)])
+//            ->with('lastLogin')
+//        ;
+//
+//        return $this;
+//    }
 }
