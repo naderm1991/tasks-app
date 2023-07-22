@@ -19,7 +19,10 @@ class BooksController extends Controller
     public function index()
     {
         $books = Book::query()
-            ->orderBy('name')
+            ->select('books.*')
+            ->join('checkouts','checkouts.book_id','=','books.id')
+            ->groupBy('books.id')
+            ->orderByRaw('max(checkouts.borrowed_date) DESC')
             ->withLastCheckout()
             ->with('lastCheckout.user')
             ->paginate()
