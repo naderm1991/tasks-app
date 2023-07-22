@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Book;
+use App\Models\Checkout;
 use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Customer;
@@ -19,14 +21,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Company::factory(100)->create()->each(function ($company) {
+        Company::factory(10)->create()->each(function ($company) {
             $company->users()->saveMany(User::factory(5)->make(['is_admin' => 1]));
         });
-        Company::factory(10000)->create()->each(function ($company) {
+        Company::factory(10)->create()->each(function ($company) {
             $company->users()->saveMany(User::factory(5)->make(['is_admin' => 0]));
         });
 
-        Task::factory(500)->create();
+        Task::factory(10)->create();
 
         $users = User::all();
         foreach ($users as $user) {
@@ -37,9 +39,25 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        // todo fix migratino issues related to comments before uncomment this line
+        // todo fix migration issues related to comments before uncomment this line
         //Comment::factory(1)->create();
 
-        Customer::factory(100)->create();
+//        Customer::factory(10)->create();
+
+        // create checkout factory command
+        // php artisan make:factory CheckoutFactory --model=Checkout
+        Book::factory(10)->create();
+
+        $books = Book::all();
+        foreach ($books as $book) {
+            Checkout::factory()->create(
+                [
+                    'user_id'=>  User::query()->inRandomOrder()->first()->id,
+                    'book_id'=> $book->id,
+                    'borrowed_date'=> now()->subDays(rand(1, 100)),
+                ]
+            );
+        }
+
     }
 }

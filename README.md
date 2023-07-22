@@ -40,3 +40,12 @@ Task tracking:
 
 7- add run testing on github actions .5 hour
 
+-----------------------
+
+//create books table command
+//php artisan make:migration create_books_table --create=books
+//create checkouts table command
+//php artisan make:migration create_checkouts_table --create=checkouts
+//create books controller command
+//php artisan make:controller BooksController --resource --model=Book
+

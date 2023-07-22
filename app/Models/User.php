@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,7 +54,6 @@ class User extends Authenticatable
 
 //    protected $with = [];
 
-
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class,'assigned_to_id');
@@ -66,7 +66,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Login::class);
     }
-
     public function scopeWithLastLoginAt($query): void
     {
         $query->addSelect(['last_login_at' => Login::query()
@@ -77,7 +76,6 @@ class User extends Authenticatable
         ])
         ->withCasts(['last_login_at' => 'datetime']);
     }
-
     public function scopeWithLastLoginIpAddress($query): void
     {
         $query->addSelect(['last_login_ip_address' => Login::query()
@@ -87,7 +85,6 @@ class User extends Authenticatable
             ->take(1)
         ]);
     }
-
     /**
      * @return BelongsTo
      */
@@ -98,7 +95,6 @@ class User extends Authenticatable
         // right way
         return $this->belongsTo(Login::class);
     }
-
     public function scopeWithLastLogin($query): void
     {
         $query->addSelect(['last_login_id' => Login::query()
@@ -108,12 +104,18 @@ class User extends Authenticatable
             ->take(1)
         ])->with('lastLogin:id,ip_address,created_at');
     }
-
+    public function scopeOrderByLastLogin($query): void
+    {
+        $query->orderByDesc(Login::query()->select('created_at')
+            ->whereColumn('user_id', 'users.id')
+            ->latest()
+            ->take(1)
+        );
+    }
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
-
     public function scopeSearch($query, string $term = null): void
     {
         // when you use a company model, you will create a separated query
@@ -145,5 +147,14 @@ class User extends Authenticatable
                 ;
             });
         });
+    }
+
+    public function books(): BelongsToMany
+    {
+        return
+            $this->belongsToMany(Book::class,'checkouts')
+            ->using(Checkout::class)
+            ->withPivot(['borrowed_date'])
+        ;
     }
 }

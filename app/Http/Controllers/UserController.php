@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Login;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -22,9 +23,7 @@ class UserController extends BaseController
         //todo check the load time without the queries
         $users = User::query()
             ->select('users.*')
-            ->join('logins', 'logins.user_id', '=', 'users.id')
-            ->groupBy('users.id')
-            ->orderByRaw( 'max(logins.created_at) desc')
+            ->orderByLastLogin()
             ->withLastLogin()
             ->paginate()
         ;
