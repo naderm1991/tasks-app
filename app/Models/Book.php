@@ -12,6 +12,7 @@ class Book extends Model
 
     public function user()
     {
+        // inverse of belongsToMany
         return $this->belongsToMany(User::class,'checkouts')
             ->using(Checkout::class)
             ->withPivot('borrowed_date')
@@ -24,12 +25,14 @@ class Book extends Model
     }
     public function scopeWithLastCheckout($query): void
     {
-        $query
-            ->addSelect(['last_checkout_id' => Checkout::query()
-            ->select('id')
-            ->whereColumn('book_id','books.id')
-            ->latest()
-            ->take(1)
+        $query->addSelect(['last_checkout_id' =>
+            (Checkout::query()
+                ->select('id')
+                ->whereColumn('book_id','books.id')
+                ->orderByDesc('borrowed_date')
+                ->latest()
+                ->take(1)
+            )
         ])
         //todo add needed columns only
         ->with('lastCheckout');

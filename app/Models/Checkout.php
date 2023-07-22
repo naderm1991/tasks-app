@@ -15,7 +15,7 @@ class Checkout extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'borrowed_date' => 'datetime',
+        'borrowed_date' => 'date',
     ];
 
     public function user(): BelongsTo

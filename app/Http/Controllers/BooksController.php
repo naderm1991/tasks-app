@@ -24,9 +24,6 @@ class BooksController extends Controller
             ->with('lastCheckout.user')
             ->paginate()
         ;
-//        dd($books);
-        // create new blade template in resources/views/books.blade.php
-        //
         return view('books.index', ['books' => $books]);
     }
 
