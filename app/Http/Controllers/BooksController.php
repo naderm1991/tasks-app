@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Checkout;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,9 +21,11 @@ class BooksController extends Controller
     {
         $books = Book::query()
             ->select('books.*')
-            ->join('checkouts','checkouts.book_id','=','books.id')
-            ->groupBy('books.id')
-            ->orderByRaw('max(checkouts.borrowed_date) DESC')
+            ->orderByDesc(Checkout::query()->select('borrowed_date')
+                ->whereColumn('book_id','books.id')
+                ->latest('borrowed_date')
+                ->take(1)
+            )
             ->withLastCheckout()
             ->with('lastCheckout.user')
             ->paginate()
