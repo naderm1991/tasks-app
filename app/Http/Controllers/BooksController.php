@@ -17,15 +17,18 @@ class BooksController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
         $books = Book::query()
             ->select('books.*')
-            ->orderByDesc(Checkout::query()->select('borrowed_date')
-                ->whereColumn('book_id','books.id')
-                ->latest('borrowed_date')
-                ->take(1)
-            )
+            ->orderByDesc(function ($query) {
+                $query->select('borrowed_date')
+                    ->from('checkouts')
+                    ->whereColumn('book_id','books.id')
+                    ->orderByDesc('borrowed_date')
+                    ->take(1)
+                ;
+            })
             ->withLastCheckout()
             ->with('lastCheckout.user')
             ->paginate()

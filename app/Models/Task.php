@@ -39,6 +39,9 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|Task whereStatus($value)
  * @method static Builder|Task whereTitle($value)
  * @method static Builder|Task whereUpdatedAt($value)
+ * @property-read \App\Models\User|null $assignedTo
+ * @property-read int|null $comments_count
+ * @mixin \Eloquent
  */
 class Task extends Model
 {
