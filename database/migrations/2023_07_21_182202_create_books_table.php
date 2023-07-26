@@ -15,6 +15,8 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('last_checkout_id')->nullable()->constrained('checkouts');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
             $table->string('name', 100)->nullable();
             $table->string('author', 100)->nullable();

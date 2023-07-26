@@ -41,10 +41,7 @@ class Book extends Model
     public function user()
     {
         // inverse of belongsToMany
-        return $this->belongsToMany(User::class,'checkouts')
-            ->using(Checkout::class)
-            ->withPivot('borrowed_date')
-        ;
+        return $this->belongsTo(User::class);
     }
 
     public function lastCheckout(): BelongsTo

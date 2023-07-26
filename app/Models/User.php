@@ -18,7 +18,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int id
  * @property bool is_owner
  * @method withLastLogin()
- * @property int $id
  * @property string $name
  * @property string|null $name_normalized
  * @property string $email
@@ -32,7 +31,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $last_name_normalized
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $is_owner
  * @property int $company_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
  * @property-read int|null $books_count

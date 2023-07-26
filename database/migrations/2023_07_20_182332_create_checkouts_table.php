@@ -15,7 +15,8 @@ class CreateCheckoutsTable extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
+            // todo add this constraint in new migration ->constrained('books')->onDelete('cascade')
+            $table->foreignId('book_id');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamp('borrowed_date')->nullable();
         });

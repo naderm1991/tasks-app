@@ -34,18 +34,23 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Last Checkout</th>
+            <th>Author</th>
+            <th>Availability</th>
         </tr>
         </thead>
         <tbody>
-{{--        // create foreach books--}}
+        {{-- // create foreach books--}}
         @foreach ($books as $book)
             <tr>
                 <td>{{ $book->name }}</td>
                 <td>
-                    @if($book->lastCheckout != null)
-                        {{ $book->lastCheckout->user->name }}
-                        ({{ $book->lastCheckout->borrowed_date->diffForHumans() }})
+                    {{$book->author}}
+                </td>
+                <td>
+                    @if($book->user)
+                        <div style="font-size:14px; color:saddlebrown; font-weight:bold; font-style:italic;">Borrowed by {{$book->user->name}}</div>
+                    @else
+                        Available
                     @endif
                 </td>
             </tr>

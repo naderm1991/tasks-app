@@ -21,16 +21,10 @@ class BooksController extends Controller
     public function index(): View|Factory|Application
     {
         $books = Book::query()
-            ->select('books.*')
-            ->orderBy(User::select('name')
-                ->join('checkouts','checkouts.user_id','users.id')
-                ->whereColumn('checkouts.book_id', '=', 'books.id')
-                ->latest('checkouts.borrowed_date')
-                ->take(1)
-            )
-            ->withLastCheckout()
-            ->with('lastCheckout.user')
-            ->paginate()
+            ->with('user')
+            ->orderByRaw('user_id is null')
+            ->orderBy('name')
+            ->get()
         ;
         return view('books.index', ['books' => $books]);
     }
