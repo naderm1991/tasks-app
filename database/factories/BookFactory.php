@@ -17,7 +17,7 @@ class BookFactory extends Factory
         return [
             'name' => $this->faker->sentence,
             'author' => $this->faker->name,
-            'user_id' => User::query()->inRandomOrder()->first()->id,
+//            'user_id' => User::query()->inRandomOrder()->first()->id,
         ];
     }
 }

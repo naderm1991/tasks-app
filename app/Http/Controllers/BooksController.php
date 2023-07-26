@@ -22,7 +22,7 @@ class BooksController extends Controller
     {
         $books = Book::query()
             ->with('user')
-            ->orderByDesc('user_id')
+            ->orderByRaw('user_id is null asc')
             ->orderBy('name')
             ->get()
         ;
