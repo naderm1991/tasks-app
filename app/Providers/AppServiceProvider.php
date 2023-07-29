@@ -18,8 +18,9 @@ class AppServiceProvider extends ServiceProvider
         \Illuminate\Pagination\Paginator::defaultView('pagination');
 
         Builder::macro('orderByNullsLast', function ($column, $direction = 'asc') {
+            $column = $this->getGrammar()->wrap($column);
             $direction = strtolower($direction) === 'asc' ? 'asc' : 'desc';
-            return $this->orderByRaw("{$column} IS NULL, {$column} {$direction}");
+            return $this->orderByRaw("$column $direction nulls last");
         });
     }
 
