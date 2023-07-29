@@ -16,6 +16,7 @@ class ContactsTable extends Component
     public int $perPage = 10;
     public string $sortField = 'name';
     public bool $sortAsc = true;
+    protected string $paginationTheme = 'bootstrap';
 
     public string $search = '';
 

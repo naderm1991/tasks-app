@@ -46,7 +46,7 @@
 
     <div class="row">
         <div class="col">
-            {{ $contacts->links('pagination::bootstrap-4') }}
+            {{ $contacts->links() }}
         </div>
 
         <div class="col text-right text-muted">

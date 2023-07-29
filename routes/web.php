@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TaskController;
@@ -29,5 +30,6 @@ Route::get('statistics/user_tasks_count', [StatisticsController::class, 'userTas
 Route::get('statistics/tasks_years', [StatisticsController::class, 'tasksPerYear'])->name('statistics.tasks');
 Route::resource('customers', CustomerController::class);
 Route::resource('books', BooksController::class);
-Route::get('/', function () {return view('contacts');});
-Route::get('/livewire/message/contacts-table', function () {return view('contacts');});
+// create contacts controller command: php artisan make:controller ContactsController
+Route::get('contacts', ContactsController::class);
+Route::get('livewire/message/contacts-table', ContactsController::class);
