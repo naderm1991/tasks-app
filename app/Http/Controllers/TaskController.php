@@ -26,6 +26,8 @@ class TaskController extends Controller
      */
     public function index(): View|Factory|Application
     {
+        // create features contoller command
+        // php artisan make:controller FeaturesController --resource
         if (env('DB_CONNECTION') == "pgsql"){
             // postgres users
             $statuses = Task::query()->toBase()
@@ -44,8 +46,7 @@ class TaskController extends Controller
                 ->first()
             ;
         }
-        $tasks = Task::query()
-            ->with(['user','assignedTo','comments.user'])
+        $tasks = Task::with(['user','assignedTo','comments.user'])
             ->orderBy('id')
             ->paginate(100)
         ;
