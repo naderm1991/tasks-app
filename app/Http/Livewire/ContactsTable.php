@@ -40,9 +40,9 @@ class ContactsTable extends Component
             'contacts' =>
                 ( Contact::search($this->search)
                     ->when($this->sortField === 'town', function ($query) {
-                        $query->orderByRaw('town IS NULL ASC');
-                        $query->orderBy($this->sortField,$this->direction);
+                        $query->orderByRaw('town '.$this->direction.' NULLS LAST');
                     })
+                    ->orderBy('name')
                     ->paginate($this->perPage)
                 )
             ,
