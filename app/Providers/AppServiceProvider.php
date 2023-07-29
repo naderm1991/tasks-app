@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
+use Nette\Utils\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,9 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-//        $this->app->bind(UserBuilder::class, function () {
-//            return User::query();
-//        });
+        \Illuminate\Pagination\Paginator::defaultView('pagination');
+
+        Builder::macro('orderByNullsLast', function ($column, $direction = 'asc') {
+            $direction = strtolower($direction) === 'asc' ? 'asc' : 'desc';
+            return $this->orderByRaw("{$column} IS NULL, {$column} {$direction}");
+        });
     }
 
     /**
