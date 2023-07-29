@@ -15,7 +15,7 @@ class ContactsTable extends Component
 
     public int $perPage = 10;
     public string $sortField = 'name';
-    public bool $sortAsc = true;
+    public string $direction = 'asc';
     protected string $paginationTheme = 'bootstrap';
 
     public string $search = '';
@@ -23,9 +23,13 @@ class ContactsTable extends Component
     public function sortBy($field): void
     {
         if ($this->sortField === $field) {
-            $this->sortAsc = ! $this->sortAsc;
+            if ($this->direction === 'desc'){
+                $this->direction = 'asc';
+            }else{
+                $this->direction = 'desc';
+            }
         } else {
-            $this->sortAsc = true;
+            $this->direction = 'asc';
         }
         $this->sortField = $field;
     }
@@ -33,9 +37,15 @@ class ContactsTable extends Component
     public function render(): Factory|View|Application
     {
         return view('livewire.contacts-table', [
-            'contacts' => Contact::search($this->search)
-                ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
-                ->paginate($this->perPage),
+            'contacts' =>
+                ( Contact::search($this->search)
+                    ->when($this->sortField === 'town', function ($query) {
+                        $query->orderByRaw('town IS NULL ASC');
+                        $query->orderBy($this->sortField,$this->direction);
+                    })
+                    ->paginate($this->perPage)
+                )
+            ,
         ]);
     }
 }

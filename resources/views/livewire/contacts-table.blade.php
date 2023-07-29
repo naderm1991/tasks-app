@@ -18,7 +18,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><a wire:click.prevent="sortBy('name')" role="button" href="#">
+                    <th><a @include('includes._sort-button', ['field' => 'name']) role="button" href="#">
                         Name
                         @include('includes._sort-icon', ['field' => 'name'])
                     </a></th>
@@ -30,6 +30,12 @@
                         Birthdate
                         @include('includes._sort-icon', ['field' => 'birthdate'])
                     </a></th>
+                    <th>
+                        <a wire:click.prevent="sortBy('town')" role="button" href="#">
+                            Town
+                            @include('includes._sort-icon', ['field' => 'town'])
+                        </a>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +44,7 @@
                         <td>{{ $contact->name }}</td>
                         <td>{{ $contact->email }}</td>
                         <td>{{ $contact->birthdate->format('m-d-Y') }}</td>
+                        <td>{{ $contact->town??"-" }}</td>
                     </tr>
                 @endforeach
             </tbody>

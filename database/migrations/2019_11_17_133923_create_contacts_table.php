@@ -15,8 +15,13 @@ class CreateContactsTable extends Migration
             $table->string('birthdate');
             $table->string('favorite_color');
             $table->string('last_contacted_at');
-
+            $table->string('town', 100)->nullable();
             $table->timestamps();
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('contacts');
     }
 }

@@ -30,6 +30,4 @@ Route::get('statistics/user_tasks_count', [StatisticsController::class, 'userTas
 Route::get('statistics/tasks_years', [StatisticsController::class, 'tasksPerYear'])->name('statistics.tasks');
 Route::resource('customers', CustomerController::class);
 Route::resource('books', BooksController::class);
-// create contacts controller command: php artisan make:controller ContactsController
 Route::get('contacts', ContactsController::class);
-Route::get('livewire/message/contacts-table', ContactsController::class);
