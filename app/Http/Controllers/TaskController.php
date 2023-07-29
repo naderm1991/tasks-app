@@ -44,7 +44,8 @@ class TaskController extends Controller
                 ->first()
             ;
         }
-        $tasks = Task::with(['user','assignedTo','comments.user'])
+        $tasks = Task::query()
+            ->with(['user','assignedTo','comments.user'])
             ->orderBy('id')
             ->paginate(100)
         ;
