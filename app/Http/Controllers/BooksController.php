@@ -22,76 +22,9 @@ class BooksController extends Controller
     {
         $books = Book::query()
             ->with('user')
-            ->orderByRaw('user_id is null asc')
+            ->orderByRaw('user_id is null desc')
             ->orderBy('name')
-            ->get()
-        ;
+            ->get();
         return view('books.index', ['books' => $books]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return Response
-     */
-    public function show(Book $book)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return Response
-     */
-    public function edit(Book $book)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Book  $book
-     * @return Response
-     */
-    public function update(Request $request, Book $book)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Book  $book
-     * @return Response
-     */
-    public function destroy(Book $book)
-    {
-        //
     }
 }

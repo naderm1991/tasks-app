@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Checkout;
 use App\Models\Comment;
 use App\Models\Company;
+use App\Models\Contact;
 use App\Models\Customer;
 use App\Models\Login;
 use App\Models\Task;
@@ -21,6 +22,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // create factory command
+        // php artisan make:factory ContactFactory --model=Contact
+        Contact::factory(500)->create();
+
         Company::factory(10)->create()->each(function ($company) {
             $company->users()->saveMany(User::factory(5)->make(['is_admin' => 1]));
         });

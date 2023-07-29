@@ -29,3 +29,5 @@ Route::get('statistics/user_tasks_count', [StatisticsController::class, 'userTas
 Route::get('statistics/tasks_years', [StatisticsController::class, 'tasksPerYear'])->name('statistics.tasks');
 Route::resource('customers', CustomerController::class);
 Route::resource('books', BooksController::class);
+Route::get('/', function () {return view('contacts');});
+Route::get('/livewire/message/contacts-table', function () {return view('contacts');});
