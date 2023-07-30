@@ -17,7 +17,7 @@ class FeatureFactory extends Factory
         return [
             'title'=> $this->faker->sentence(3),
             'description'=> $this->faker->paragraph(3),
-            'status'=> $this->faker->randomElement(['pending', 'in progress', 'completed']),
+            'status'=> $this->faker->randomElement(['Completed', 'Requested', 'Approved']),
         ];
     }
 }

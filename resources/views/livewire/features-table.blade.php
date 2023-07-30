@@ -32,14 +32,24 @@
                         @include('includes._sort-icon', ['field' => 'status'])
                     </a>
                 </th>
+                <th><a wire:click.prevent="sortBy('activity')" role="button" href="#">
+                        Activity
+                        @include('includes._sort-icon', ['field' => 'activity'])
+                    </a>
+                </th>
             </tr>
             </thead>
             <tbody>
             @foreach ($features as $feature)
                 <tr>
                     <td>{{ $feature->title }}</td>
-                    <td>{{ $feature->description }}</td>
+
+                    <td>{{ Str::words($feature->description,10) }}</td>
                     <td>{{ $feature->status??"-" }}</td>
+                    <td>
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ $feature->votes_count}} /
+                        <i class="far fa-comments"></i> {{$feature->comments_count}}
+                    </td>
                 </tr>
             @endforeach
             </tbody>

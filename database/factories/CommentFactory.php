@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Feature;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,10 +19,10 @@ class CommentFactory extends Factory
         return [
             'content' => $this->faker->sentence,
             'user_id' => function () {
-                return rand('485', '10');
+                return User::query()->inRandomOrder()->first()->id;
             },
             'task_id' => function () {
-                return rand('1', '37');
+                return Task::query()->inRandomOrder()->first()->id;
             },
             'feature_id' => function () {
                 return Feature::query()->inRandomOrder()->first()->id;

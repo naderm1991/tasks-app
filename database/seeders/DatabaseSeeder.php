@@ -12,6 +12,7 @@ use App\Models\Feature;
 use App\Models\Login;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Vote;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -65,5 +66,6 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        Vote::factory(10)->create();
     }
 }

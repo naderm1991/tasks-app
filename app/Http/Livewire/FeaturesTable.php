@@ -37,14 +37,11 @@ class FeaturesTable extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.features-table', [
-            'features' =>
-                ( Feature::search($this->search)
-
-                    ->orderBy('title')
-                    ->paginate($this->perPage)
-                )
-            ,
-        ]);
+        $features = Feature::query()
+            ->withCount('comments','votes')
+            ->latest()
+            ->paginate($this->perPage)
+        ;
+        return view('livewire.features-table', ['features' => $features]);
     }
 }
