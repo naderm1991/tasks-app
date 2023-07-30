@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // todo fix migration issues related to comments before uncomment this line
-        //Comment::factory(1)->create();
+        Comment::factory(10)->create();
 
 //        Customer::factory(10)->create();
 

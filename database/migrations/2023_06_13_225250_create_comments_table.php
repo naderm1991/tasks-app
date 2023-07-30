@@ -17,7 +17,8 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->text('content');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('task_id');
+            $table->unsignedBigInteger('task_id')->nullable();
+            $table->unsignedBigInteger('feature_id')->nullable();
             $table->timestamps();
             // Add foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

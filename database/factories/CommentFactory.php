@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Feature;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,6 +22,9 @@ class CommentFactory extends Factory
             },
             'task_id' => function () {
                 return rand('1', '37');
+            },
+            'feature_id' => function () {
+                return Feature::query()->inRandomOrder()->first()->id;
             },
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year'),
