@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Customer;
+use App\Models\Feature;
 use App\Models\Login;
 use App\Models\Task;
 use App\Models\User;
@@ -22,8 +23,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // create factory command
-        // php artisan make:factory ContactFactory --model=Contact
+
+        Feature::factory(10)->create();
         Contact::factory(500)->create();
 
         Company::factory(10)->create()->each(function ($company) {

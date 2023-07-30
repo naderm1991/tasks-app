@@ -3,6 +3,7 @@
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FeaturesController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -31,3 +32,4 @@ Route::get('statistics/tasks_years', [StatisticsController::class, 'tasksPerYear
 Route::resource('customers', CustomerController::class);
 Route::resource('books', BooksController::class);
 Route::get('contacts', ContactsController::class);
+Route::get('features', [FeaturesController::class, 'index'])->name('features.index');

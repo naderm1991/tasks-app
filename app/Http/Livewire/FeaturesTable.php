@@ -38,12 +38,10 @@ class FeaturesTable extends Component
     public function render(): Factory|View|Application
     {
         return view('livewire.features-table', [
-            'contacts' =>
+            'features' =>
                 ( Feature::search($this->search)
-                    ->when($this->sortField === 'town', function ($query) {
-                        $query->orderByNullsLast('town', $this->direction);
-                    })
-                    ->orderBy('name')
+
+                    ->orderBy('title')
                     ->paginate($this->perPage)
                 )
             ,

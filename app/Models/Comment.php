@@ -57,4 +57,9 @@ class Comment extends Model
         // a: this means the first comment of the task
         return $this->task->comments->first()->user_id === $this->user_id;
     }
+
+    public function feature(): BelongsTo
+    {
+        return $this->belongsTo(Feature::class);
+    }
 }
