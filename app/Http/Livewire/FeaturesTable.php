@@ -15,7 +15,7 @@ class FeaturesTable extends Component
     use WithPagination;
 
     public string|null $sortField = null;
-    public string $direction = 'desc';
+    public string $direction = 'asc';
     protected string $paginationTheme = 'bootstrap';
 
     public string $search = '';
@@ -29,7 +29,7 @@ class FeaturesTable extends Component
                 $this->direction = 'desc';
             }
         } else {
-            $this->direction = 'desc';
+            $this->direction = 'asc';
         }
         $this->sortField = $field;
     }
@@ -38,6 +38,13 @@ class FeaturesTable extends Component
     {
         $features = Feature::query()
             ->withCount('comments','votes')
+            ->when($this->sortField, function ($query,$sortField) {
+                switch ($sortField){
+                    case 'title': return $query->orderBy('title',$this->direction);
+                    case 'status': return $query->orderByStatus($this->direction);
+                    case 'activity': return $query->orderByActivity($this->direction);
+                }
+            })
             ->latest()
             ->paginate()
         ;

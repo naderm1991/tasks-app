@@ -27,7 +27,7 @@
 {{--                        @include('includes._sort-icon', ['field' => 'description'])--}}
 {{--                    </a>--}}
 {{--                </th>--}}
-                <th><a wire:click.prevent="sortBy('birthdate')" role="button" href="#">
+                <th><a wire:click.prevent="sortBy('status')" role="button" href="#">
                         Status
                         @include('includes._sort-icon', ['field' => 'status'])
                     </a>
