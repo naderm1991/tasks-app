@@ -28,4 +28,9 @@ class Feature extends Model
     {
         return $this->hasMany(Vote::class);
     }
+
+    public function scopeOrderByStatus($query, $direction)
+    {
+        return $query->orderBy('status', $direction);
+    }
 }
