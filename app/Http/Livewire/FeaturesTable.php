@@ -15,7 +15,7 @@ class FeaturesTable extends Component
     use WithPagination;
 
     public string|null $sortField = null;
-    public string $direction = 'asc';
+    public string $direction = 'desc';
     protected string $paginationTheme = 'bootstrap';
 
     public string $search = '';
@@ -29,7 +29,7 @@ class FeaturesTable extends Component
                 $this->direction = 'desc';
             }
         } else {
-            $this->direction = 'asc';
+            $this->direction = 'desc';
         }
         $this->sortField = $field;
     }
