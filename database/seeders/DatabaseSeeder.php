@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        Feature::factory(10)->create();
+        Feature::factory(20)->create();
         Contact::factory(500)->create();
 
         Company::factory(10)->create()->each(function ($company) {
