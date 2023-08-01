@@ -14,8 +14,7 @@ class FeaturesTable extends Component
 {
     use WithPagination;
 
-    public int $perPage = 10;
-    public string $sortField = 'name';
+    public string|null $sortField = null;
     public string $direction = 'asc';
     protected string $paginationTheme = 'bootstrap';
 
@@ -40,7 +39,7 @@ class FeaturesTable extends Component
         $features = Feature::query()
             ->withCount('comments','votes')
             ->latest()
-            ->paginate($this->perPage)
+            ->paginate()
         ;
         return view('livewire.features-table', ['features' => $features]);
     }

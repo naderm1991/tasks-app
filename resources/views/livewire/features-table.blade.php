@@ -22,11 +22,11 @@
                         Title
                         @include('includes._sort-icon', ['field' => 'title'])
                     </a></th>
-                <th><a wire:click.prevent="sortBy('email')" role="button" href="#">
-                        Description
-                        @include('includes._sort-icon', ['field' => 'description'])
-                    </a>
-                </th>
+{{--                <th><a wire:click.prevent="sortBy('email')" role="button" href="#">--}}
+{{--                        Description--}}
+{{--                        @include('includes._sort-icon', ['field' => 'description'])--}}
+{{--                    </a>--}}
+{{--                </th>--}}
                 <th><a wire:click.prevent="sortBy('birthdate')" role="button" href="#">
                         Status
                         @include('includes._sort-icon', ['field' => 'status'])
@@ -44,7 +44,7 @@
                 <tr>
                     <td>{{ $feature->title }}</td>
 
-                    <td>{{ Str::words($feature->description,10) }}</td>
+{{--                    <td>{{ Str::words($feature->description,10) }}</td>--}}
                     <td>{{ $feature->status??"-" }}</td>
                     <td>
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ $feature->votes_count}} /

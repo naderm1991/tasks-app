@@ -16,7 +16,11 @@ class Contact extends Model
     {
         return empty($query) ?
             static::query() :
-            static::query()->where('name', 'like', '%'.$query.'%')->orWhere('email', 'like', '%'.$query.'%')
+            (
+                static::query()
+                ->where('name', 'like', '%'.$query.'%')
+                ->orWhere('email', 'like', '%'.$query.'%')
+            )
         ;
     }
 }
