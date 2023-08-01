@@ -49,6 +49,7 @@
                     <td>
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ $feature->votes_count}} /
                         <i class="far fa-comments"></i> {{$feature->comments_count}}
+                        ({{ $feature->votes_count + ($feature->comments_count * 2)}})
                     </td>
                 </tr>
             @endforeach

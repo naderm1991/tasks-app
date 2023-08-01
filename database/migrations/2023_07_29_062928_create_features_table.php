@@ -19,6 +19,13 @@ class CreateFeaturesTable extends Migration
             $table->text('description');
             $table->string('status');
             $table->timestamps();
+            $table->rawIndex('(
+                CASE
+                    WHEN status = "Requested" THEN 1
+                    WHEN status = "Approved" THEN 2
+                    WHEN status = "Completed" THEN 3
+                END
+            )','feature_status_ranking_index');
         });
     }
 

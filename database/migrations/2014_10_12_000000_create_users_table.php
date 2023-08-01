@@ -54,11 +54,11 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        //DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        if (env('DB_CONNECTION') == "mysql") {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        }
         Schema::dropIfExists('users');
-
-//        DB::statement('DROP TABLE if exists users cascade;');
-
+        //DB::statement('DROP TABLE if exists users cascade;');
         //DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

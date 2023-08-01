@@ -33,8 +33,10 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-//        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-//        Schema::dropIfExists('companies');
+        if (env('DB_CONNECTION') == "mysql") {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        }
+        //        Schema::dropIfExists('companies');
         DB::statement('DROP TABLE if exists companies cascade;');
 
 //        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
