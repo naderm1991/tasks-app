@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
@@ -21,7 +25,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $name
  * @property string|null $name_normalized
  * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property Carbon|null $email_verified_at
  * @property string $password
  * @property int $is_admin
  * @property string|null $remember_token
@@ -29,47 +33,48 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $first_name_normalized
  * @property string $last_name
  * @property string|null $last_name_normalized
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property int $company_id
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Book> $books
  * @property-read int|null $books_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
  * @property-read int|null $comments_count
- * @property-read \App\Models\Company $company
- * @property-read \App\Models\Login|null $lastLogin
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Login> $logins
+ * @property-read Company $company
+ * @property-read Login|null $lastLogin
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Login> $logins
  * @property-read int|null $logins_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Task> $tasks
  * @property-read int|null $tasks_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User orderByLastLogin()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User search(?string $term = null)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCompanyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstNameNormalized($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereIsOwner($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereLastNameNormalized($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereNameNormalized($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User withLastLoginAt()
- * @method static \Illuminate\Database\Eloquent\Builder|User withLastLoginIpAddress()
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static Builder|User orderByLastLogin()
+ * @method static Builder|User query()
+ * @method static Builder|User search(?string $term = null)
+ * @method static Builder|User whereCompanyId($value)
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereEmail($value)
+ * @method static Builder|User whereEmailVerifiedAt($value)
+ * @method static Builder|User whereFirstName($value)
+ * @method static Builder|User whereFirstNameNormalized($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereIsAdmin($value)
+ * @method static Builder|User whereIsOwner($value)
+ * @method static Builder|User whereLastName($value)
+ * @method static Builder|User whereLastNameNormalized($value)
+ * @method static Builder|User whereName($value)
+ * @method static Builder|User whereNameNormalized($value)
+ * @method static Builder|User wherePassword($value)
+ * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereUpdatedAt($value)
+ * @method static Builder|User withLastLoginAt()
+ * @method static Builder|User withLastLoginIpAddress()
+ * @method static Builder|User orderByBirthDay()
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -104,10 +109,16 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'birth_date' => 'date',
         'email_verified_at' => 'datetime',
     ];
 
-//    protected $with = [];
+    public function scopeOrderByBirthDay($query): void
+    {
+        // Wrong: YYYY-MM-DD
+        // Right: MM-DD
+        $query->orderByRaw("DATE_FORMAT(birth_date,'%m-%d')");
+    }
 
     public function tasks(): HasMany
     {

@@ -37,35 +37,21 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
             <th>NAME</th>
             <th>EMAIL</th>
             <th>
-                LAST LOGIN
+                BIRTHDAY
             </th>
-
-            <th>Company</th>
         </tr>
         </thead>
         <tbody>
         @foreach ($users as $user)
             <tr>
-                <td>{{ $user->id }}</td>
                 <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-{{--                    {{ $user->last_login_at->diffForHumans() }}--}}
-
-                    @if($user->lastLogin)
-                        {{ $user->lastLogin->created_at->diffForHumans() }}
-                    @endif
-                    <span class="text-sm-center">
-                        @if($user->lastLogin)
-                            ({{ $user->lastLogin->ip_address }})
-                        @endif
-                    </span>
+                    {{ $user->birth_date->format('M j') }}
                 </td>
-{{--                <td>{{ $user->company->name }}</td>--}}
             </tr>
         @endforeach
         </tbody>
