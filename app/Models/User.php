@@ -54,7 +54,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|User newQuery()
  * @method static Builder|User orderByLastLogin()
  * @method static Builder|User query()
- * @method static Builder|User search(?string $term = null)
+ * @method static Builder|User search($query,?string $term = null)
  * @method static Builder|User whereCompanyId($value)
  * @method static Builder|User whereCreatedAt($value)
  * @method static Builder|User whereEmail($value)
@@ -75,6 +75,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|User withLastLoginIpAddress()
  * @method static Builder|User orderByBirthDay()
  * @method static Builder|User whereBirthDayThisWeek()
+ * @method orderByUpComingBirthDay()
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -134,9 +135,6 @@ class User extends Authenticatable
 
     public function scopeOrderByUpComingBirthDay($query): void
     {
-//         Carbon::setTestNow(Carbon::parse('January 1, 2023'));
-
-//        dd(array_fill(0, 4, Carbon::now()->startOfWeek()->toDateString()));
         if (config('database.default') === 'mysql') {
             $query->orderByRaw('
                 case

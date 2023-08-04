@@ -182,3 +182,17 @@ select `users`.* from `users` order by (select `name` from `companies` where `id
 
 
 select `users`.* from `users` inner join `companies` on `companies`.`id` = `users`.`company_id` order by `companies`.`name` asc limit 15 offset 0
+
+------------------------------------------------------------------------------------------------------------------------
+
+# "Lesson 21 - Filtering and sorting anniversary dates"
+
+SELECT
+    "1972-08-01" + interval ( year("2023-07-31") - year("1972-08-01") ) year,
+    "2023-07-31",
+    "1972-08-01" + interval (year("2023-07-31") - year("1972-08-01")) year,
+    "1972-08-01" + interval (year("2023-07-31") - year("1972-08-01")) + 1 year
+;
+
+
+
