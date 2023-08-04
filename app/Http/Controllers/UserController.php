@@ -22,11 +22,15 @@ class UserController extends BaseController
     {
         //todo check the load time without the queries
         $users = User::query()
-            ->whereBirthDayThisWeek()
-            ->orderByBirthDay()
-            ->orderBy('name')
-            ->paginate()
+
+//            ->whereBirthDayThisWeek()
+            ->orderByUpComingBirthDay()
+            ->toSql()
+//            ->orderBy('name')
+//            ->get()
+//            ->toRawSql()
         ;
+        dd($users);
         return view('users.index', ['users' => $users]);
     }
 

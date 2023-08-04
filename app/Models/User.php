@@ -120,15 +120,34 @@ class User extends Authenticatable
 
     public function scopeWhereBirthDayThisWeek($query): void
     {
-        //  Carbon::setTestNow(Carbon::parse('January 1, 2023'));
-        $query->whereRaw(
-            "DATE_FORMAT(birth_date,'%m-%d') BETWEEN ". " ? and ?",
-            [
-                Carbon::now()->startOfWeek()->format('m-d'),
-                Carbon::now()->endOfWeek()->format('m-d')
-            ]
-        )
+        // Carbon::setTestNow(Carbon::parse('January 1, 2023'));
+
+        // map function returns generator
+        $dates = Carbon::now()
+            ->startOfWeek()
+            ->daysUntil(Carbon::now()->endOfWeek())
+            ->map(fn($date) => $date->format('m-d'))
         ;
+
+        $query->whereRaw("DATE_FORMAT(birth_date,'%m-%d') IN (?,?,? ,?,?,? ,?)",iterator_to_array($dates));
+    }
+
+    public function scopeOrderByUpComingBirthDay($query): void
+    {
+//         Carbon::setTestNow(Carbon::parse('January 1, 2023'));
+
+//        dd(array_fill(0, 4, Carbon::now()->startOfWeek()->toDateString()));
+        if (config('database.default') === 'mysql') {
+            $query->orderByRaw('
+                case
+                    when (birth_date + interval (year(?) - year(birth_date)) year) >= ?
+                    then (birth_date + interval (year(?) - year(birth_date)) year)
+                    else (birth_date + interval (year(?) - year(birth_date)) + 1 year)
+                end
+            ', [
+                array_fill(0, 4, Carbon::now()->startOfWeek()->toDateString()),
+            ]);
+        }
     }
 
     public function tasks(): HasMany

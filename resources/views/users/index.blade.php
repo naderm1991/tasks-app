@@ -50,7 +50,7 @@
                 <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    {{ $user->birth_date->format('F j') }}
+                    {{ $user->birth_date->format('m j Y') }}
                 </td>
             </tr>
         @endforeach
