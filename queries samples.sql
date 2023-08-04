@@ -194,5 +194,18 @@ SELECT
     "1972-08-01" + interval (year("2023-07-31") - year("1972-08-01")) + 1 year
 ;
 
+select
+    *
+from
+    `users`
+where
+    date_format(birth_date,"%m-%d")
+in
+    ('07-31','08-01','08-02' ,'08-03','08-04','08-05' ,'08-06')
+-- order by
+--     date_format(birth_date,"%m-%d"),
+--     name asc
+limit 15 offset 0;
+
 
 
