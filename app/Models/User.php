@@ -119,9 +119,19 @@ class User extends Authenticatable
         $query->orderByRaw("DATE_FORMAT(birth_date,'%m-%d')");
     }
 
+    /**
+     * get the users with birthday is this week
+     * @param $query
+     * @return void
+     */
     public function scopeWhereBirthDayThisWeek($query): void
     {
-        // Carbon::setTestNow(Carbon::parse('January 1, 2023'));
+        Carbon::setTestNow(Carbon::parse('January 1, 2023'));
+
+//        $query->whereRaw('date_format(birth_date,"%m-%d") between ? and ?', [
+//            Carbon::now()->startOfWeek()->format('m-d'),
+//            Carbon::now()->endOfWeek()->format('m-d'),
+//        ]);
 
         // map function returns generator
         $dates = Carbon::now()
@@ -130,7 +140,7 @@ class User extends Authenticatable
             ->map(fn($date) => $date->format('m-d'))
         ;
 
-        $query->whereRaw("DATE_FORMAT(birth_date,'%m-%d') IN (?,?,? ,?,?,? ,?)",iterator_to_array($dates));
+        $query->whereRaw("DATE_FORMAT(birth_date,'%m-%d') IN (?,?,?,?,?,?,?)",iterator_to_array($dates));
     }
 
     public function scopeOrderByUpComingBirthDay($query): void
