@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,8 +13,6 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -75,7 +74,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|User withLastLoginAt()
  * @method static Builder|User withLastLoginIpAddress()
  * @method static Builder|User orderByBirthDay()
- * @mixin \Eloquent
+ * @method static Builder|User whereBirthDayThisWeek()
+ * @mixin Eloquent
  */
 class User extends Authenticatable
 {
@@ -115,9 +115,20 @@ class User extends Authenticatable
 
     public function scopeOrderByBirthDay($query): void
     {
-        // Wrong: YYYY-MM-DD
-        // Right: MM-DD
         $query->orderByRaw("DATE_FORMAT(birth_date,'%m-%d')");
+    }
+
+    public function scopeWhereBirthDayThisWeek($query): void
+    {
+        //  Carbon::setTestNow(Carbon::parse('January 1, 2023'));
+        $query->whereRaw(
+            "DATE_FORMAT(birth_date,'%m-%d') BETWEEN ". " ? and ?",
+            [
+                Carbon::now()->startOfWeek()->format('m-d'),
+                Carbon::now()->endOfWeek()->format('m-d')
+            ]
+        )
+        ;
     }
 
     public function tasks(): HasMany

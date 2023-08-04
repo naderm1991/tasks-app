@@ -45,6 +45,11 @@ class CreateUsersTable extends Migration
             $table->boolean('is_owner')->default(false);
             $table->index(['last_name','first_name']);
             $table->date('birth_date')->nullable();
+            $table
+                ->rawIndex(
+                    "(date_format(birth_date,'%m-%d')),name",
+                    'users_birth_day_name_index'
+                );
         });
     }
 
