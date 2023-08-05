@@ -33,3 +33,4 @@ Route::resource('customers', CustomerController::class);
 Route::resource('books', BooksController::class);
 Route::get('contacts', ContactsController::class);
 Route::get('features', [FeaturesController::class, 'index'])->name('features.index');
+Route::get('devices', [\App\Http\Controllers\DevicesController::class, 'index'])->name('devices.index');
