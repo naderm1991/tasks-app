@@ -21,15 +21,11 @@ class CustomerController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        Auth::login(User::query()->where('name', 'Bailey Bode')->first());
         $customers = Customer::query()
-            ->with('salesRep')
-            ->visibleTo(Auth::user())
+            //->with('salesRep')
             ->orderBy('name')
             ->paginate()
         ;
-        return view('customers.index', [
-            'customers' => $customers
-        ]);
+        return view('customers.index', ['customers' => $customers]);
     }
 }

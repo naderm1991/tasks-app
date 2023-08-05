@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         Feature::factory(20)->create();
         Contact::factory(500)->create();
 
@@ -45,6 +44,8 @@ class DatabaseSeeder extends Seeder
                 ]
             );
         }
+
+        Customer::factory(50)->create();
 
         // todo fix migration issues related to comments before uncomment this line
         Comment::factory(10)->create();

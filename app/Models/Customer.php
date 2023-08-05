@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Model;
 use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,7 +42,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|Customer whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Customer extends Authenticatable
+class Customer extends Model
 {
     // q: create customer controller
     // a: php artisan make:controller CustomerController --resource --model=Customer
@@ -80,7 +81,7 @@ class Customer extends Authenticatable
 
     public function salesRep(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'sales_rep_id');
+        return $this->belongsTo(User::class);
     }
 
     public function scopeVisibleTo($query, User $user)
