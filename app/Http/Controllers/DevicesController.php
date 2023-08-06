@@ -18,15 +18,15 @@ class DevicesController extends Controller
 //        return $devices;
 
         $devices = Device::query()
-            ->orderBy('name',)
+            ->orderByRaw('natural_sort(name)')
             ->paginate(10)
         ;
 
-        $sortedResult = $devices->getCollection()
-            ->sortBy('name',SORT_NATURAL)
-            ->values()
-        ;
-        $devices->setCollection($sortedResult);
+//        $sortedResult = $devices->getCollection()
+//            ->sortBy('name',SORT_NATURAL)
+//            ->values()
+//        ;
+//        $devices->setCollection($sortedResult);
 
         return View::make('devices.index', [
             'devices' => $devices,

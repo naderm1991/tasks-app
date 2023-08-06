@@ -20,9 +20,6 @@ class CreateDevicesTable extends Migration
             $table->string('resolution');
             $table->timestamps();
         });
-
-        // create devices seeder
-        // php artisan make:seeder DeviceSeeder
     }
 
     /**
