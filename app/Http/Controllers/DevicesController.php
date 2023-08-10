@@ -18,7 +18,7 @@ class DevicesController extends Controller
 //        return $devices;
 
         $devices = Device::query()
-            ->orderByRaw('natural_sort(name)')
+                ->orderByRaw('natural_sort(lower(name))')
             ->paginate(10)
         ;
 

@@ -1278,7 +1278,7 @@ class DeviceSeeder extends Seeder
             ['name' => 'ZTE nubia Red Magic Mars', 'brand' => 'ZTE', 'resolution' => '1080 x 2160 pixels, 18:9 ratio (~402 ppi density)'],
             ['name' => 'ZTE nubia Red Magic', 'brand' => 'ZTE', 'resolution' => '1080 x 2160 pixels, 18:9 ratio (~402 ppi density)'],
             ['name' => 'ZTE nubia Z18', 'brand' => 'ZTE', 'resolution' => '1080 x 2160 pixels, 18:9 ratio (~403 ppi density)'],
-            ['name' => 'ZTE nubia Z18 mini', 'brand' => 'ZTE', 'resolution' => '1080 x 2160 pixels, 18:9 ratio (~424 ppi density)'],
+            ['name' => 'zTE nubia Z18 mini', 'brand' => 'ZTE', 'resolution' => '1080 x 2160 pixels, 18:9 ratio (~424 ppi density)'],
             ['name' => 'ZTE Blade A910', 'brand' => 'ZTE', 'resolution' => '720 x 1280 pixels, 16:9 ratio (~267 ppi density)'],
             ['name' => 'ZTE nubia V18', 'brand' => 'ZTE', 'resolution' => '1080 x 2160 pixels, 18:9 ratio (~402 ppi density)'],
             ['name' => 'ZTE nubia N3', 'brand' => 'ZTE', 'resolution' => '1080 x 2160 pixels, 18:9 ratio (~403 ppi density)'],

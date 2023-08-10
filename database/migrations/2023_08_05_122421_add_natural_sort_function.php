@@ -87,32 +87,28 @@ class AddNaturalSortFunction extends Migration
             );
         }
 
-        //              $f$ select string_agg(
-        //convert_to(
-        //coalesce(r[2],length(length(r[1])::text) || length(r[1])::text || r[1]),\'SQL_ASCII\'
-        //),\'\x00\')
         if(config('database.default') === 'pgsql'){
             DB::unprepared(
-                'create or replace function natural_sort(text) '.
-                'returns bytea language sql immutable strict as '.
-                '$f$
+                'create or replace function natural_sort(text)
+                returns bytea language sql immutable strict as
+                $f$
                 select
                     string_agg(
                         convert_to(
                             coalesce(
-                                r[2], length(r[1])::text) || length(r[1])::text || r[1]
-                            ),\'SQL_ASCII\'
-                        ),\'\x00\'
+                                r[2], length( length(r[1])::text ) || length(r[1])::text || r[1]
+                            ),
+                            \'UTF8\'
+                        ),
+                        \'\x00\'
                     )
-                from regexp_matches( $1,\'0*( [0-9]+ )|( [^0-9]+ )\', \'g\' ) r; $f$;
+                from regexp_matches( $1,\'0*([0-9]+)|([^0-9]+)\', \'g\' ) r; $f$;
             ');
 
             Schema::table('devices', function (Blueprint $table) {
-            //    $table->rawIndex('natural_sort(name)', 'name_sort_index');
+                $table->rawIndex('(natural_sort(name))', 'name_sort_index');
             });
         }
-
-
     }
 
     /**
@@ -122,8 +118,8 @@ class AddNaturalSortFunction extends Migration
      */
     public function down()
     {
-        if (config('database.default') === 'mysql') {
-            DB::unprepared('DROP FUNCTION IF EXISTS natural_sort');
+        if (config('database.default') === 'mysql' || config('database.default') === 'pgsql') {
+            DB::unprepared('DROP FUNCTION IF EXISTS natural_sort cascade');
         }
     }
 }
