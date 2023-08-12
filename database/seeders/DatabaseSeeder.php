@@ -24,8 +24,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(\Database\Seeders\DeviceSeeder::class);
-
+        $this->call(DeviceSeeder::class);
         Feature::factory(20)->create();
         Contact::factory(500)->create();
 
@@ -70,5 +69,8 @@ class DatabaseSeeder extends Seeder
         }
 
         Vote::factory(10)->create();
+
+        $this->call(PostSeeder::class);
+
     }
 }

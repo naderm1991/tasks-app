@@ -15,7 +15,7 @@ class AddNaturalSortFunction extends Migration
     {
         if (config('database.default') === 'mysql') {
             // https://www.drupal.org/project/natsort
-            DB::unprepared("CREATE FUNCTION natural_sort (s varchar(255)) RETURNS varchar(255)" .
+            DB::unprepared("CREATE FUNCTION natural_sort (s varchar(255)) RETURNS varchar(255) " .
                 "no sql DETERMINISTIC
             begin
                 declare orig varchar(255) default s;
@@ -119,7 +119,8 @@ class AddNaturalSortFunction extends Migration
     public function down()
     {
         if (config('database.default') === 'mysql' || config('database.default') === 'pgsql') {
-            DB::unprepared('DROP FUNCTION IF EXISTS natural_sort cascade');
+            //todo add "cascade" in case of psql only
+            DB::unprepared('DROP FUNCTION IF EXISTS natural_sort');
         }
     }
 }

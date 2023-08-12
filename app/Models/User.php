@@ -261,4 +261,9 @@ class User extends Authenticatable
             ->withPivot(['borrowed_date'])
         ;
     }
+
+    public function posts() : HasMany
+    {
+        return $this->hasMany(Post::class,'author_id');
+    }
 }

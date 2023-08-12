@@ -207,5 +207,42 @@ in
 --     name asc
 limit 15 offset 0;
 
+------------------------------------------------------------------------------------------------------------------------
+
+# "Lesson 24 - Full text search with ranking"
+
+select id, title
+from posts
+where match(title, body) against('fox' in boolean mode)
+_______
+
+select id, title, match(title, body) against('quick brown fox' in boolean mode) as score
+from posts
+where match(title, body) against('quick brown fox' in boolean mode)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

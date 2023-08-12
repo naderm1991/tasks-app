@@ -56,3 +56,13 @@ $kernel->terminate($request, $response);
 
 // create device model and migration command
 // php artisan make:model Device -m
+
+// create post controller and model command
+// php artisan make:controller PostController --resource --model=Post
+// create posts table migration command
+// php artisan make:migration create_posts_table --create=posts
+// create posts seeder command
+// php artisan make:seeder PostSeeder
+
+// create post factory command
+// php artisan make:factory PostFactory --model=Post
