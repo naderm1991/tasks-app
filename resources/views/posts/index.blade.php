@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Users</h2>
+                <h2>Posts</h2>
             </div>
         </div>
     </div>
@@ -47,11 +47,16 @@
         <tbody>
         @foreach ($posts as $post)
             <tr>
-                <td>{{ $post->title }}</td>
-                <td>{{ $post->author->name }}</td>
+                <td>{{ $post->title }}
+                    <span class="ml-1 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        ({{number_format($post->score,2)}})
+                    </span>
+                </td>
+                <td>{{ $post->author?$post->author->name:"" }}</td>
                 <td>
                     {{ $post->published_at->diffForHumans() }}
                 </td>
+
             </tr>
         @endforeach
         </tbody>
@@ -73,7 +78,7 @@
             {
                 let textVal = $("input:text[name=q]").val();
                 let value = "?search=" + textVal;
-                location.href = "{{url('users')}}" + value;
+                location.href = "{{url('posts')}}" + value;
             }
         });
     });
@@ -82,7 +87,7 @@
     $(".searchButton").click(function(){
         var textVal = $("input:text[name=q]").val();
 
-        value = "?q=" + textVal;
+        value = "?search=" + textVal;
         location.href = "{{url('users')}}" + value;
     });
 </script>

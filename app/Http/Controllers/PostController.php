@@ -18,7 +18,22 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->latest()->paginate(10);
+        $posts = Post::with('author')
+            ->select('*')
+            ->when(request('search'), function ($query, $search) {
+                $query
+                    ->selectRaw('match(title, body) against (? in boolean mode) as score', [$search])
+                    ->whereRaw('match(title, body) AGAINST (? IN boolean mode)', [$search])
+                ;
+            }, function ($query) {
+                $query->latest('published_at');
+            })
+//            ->when(request('search'), function ($query, $search) {
+//                $query->where('title', 'like', '%' . $search . '%')
+//                    ->orWhere('body', 'like', '%' . $search . '%');
+//            })
+            ->paginate()
+        ;
         return view('posts.index', compact('posts'));
     }
 }

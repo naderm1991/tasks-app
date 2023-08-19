@@ -25,7 +25,8 @@ class CreatePostsTable extends Migration
         });
 
         DB::statement(
-            'create fulltext index posts_fulltext_index on posts(title, body) '.
+            'create fulltext index posts_fulltext_index on
+                posts(title, body) '.
             'with parser ngram'
         );
     }
