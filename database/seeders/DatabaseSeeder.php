@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(StoreSeeder::class);
         $this->call(DeviceSeeder::class);
         Feature::factory(20)->create();
         Contact::factory(500)->create();

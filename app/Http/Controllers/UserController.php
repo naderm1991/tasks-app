@@ -22,7 +22,7 @@ class UserController extends BaseController
     {
         //todo check the load time without the queries
         $users = User::query()
-//            ->orderByBirthDay()
+            ->orderByBirthDay()
 //            ->whereBirthDayThisWeek()
             //->orderByUpComingBirthDay()
             //->toSql()

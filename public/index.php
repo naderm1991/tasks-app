@@ -66,3 +66,27 @@ $kernel->terminate($request, $response);
 
 // create post factory command
 // php artisan make:factory PostFactory --model=Post
+
+//-------------------------------------------------------------
+
+// create stores model and migration command and controller
+// php artisan make:model Store -m -c
+// create stores factory command
+// php artisan make:factory StoreFactory --model=Store
+// create stores seeder command
+// php artisan make:seeder StoreSeeder
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
