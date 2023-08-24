@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <a class="btn btn-success" href="{{ route('stores.create') }}"> Create New Store</a>
+{{--                <a class="btn btn-success" href="{{ route('stores.create') }}"> Create New Store</a>--}}
             </div>
         </div>
     </div>
@@ -43,6 +43,7 @@
             <th>Address</th>
             <th>City</th>
             <th>Distance</th>
+            <th>Edit</th>
         </tr>
         </thead>
         <tbody>
@@ -54,14 +55,17 @@
                     {{$store->city}} {{$store->state}}
                 </td>
                 <td>
-                    {{$store->distance}}
+                    {{number_format($store->distance/1000,2)}} Km
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="">Edit</a>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
     {{--    {{$customers->total()}}--}}
-    {{ $stores->links() }}
+    {{ $stores->links('pagination::bootstrap-4') }}
 </div>
 </body>
 </html>

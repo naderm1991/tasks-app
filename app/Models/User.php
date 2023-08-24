@@ -223,7 +223,9 @@ class User extends Authenticatable
     public function scopeSearch($query, string $term = null): void
     {
         // when you use a company model, you will create a separated query
-        collect(str_getcsv($term,' ','"'))->filter()->each(function (string $term) use ($query) {
+        collect(str_getcsv($term,' ','"'))
+            ->filter()
+            ->each(function (string $term) use ($query) {
             $term = preg_replace('/[^A-Za-z0-9]/', '', $term).'%';
             // where in
             $query->whereIn('id', function ($query) use ($term) {
