@@ -19,8 +19,7 @@ class CreateStoresTable extends Migration
             $table->string('city', 25);
             $table->string('state', 2);
             $table->string('postal', 7);
-            $table->decimal('latitude', 11, 8)->nullable();
-            $table->decimal('longitude', 10, 8)->nullable();
+            $table->point('location',  4326)->nullable();
             $table->timestamps();
         });
     }

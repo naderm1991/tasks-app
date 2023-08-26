@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe4e362c3e203fde93f4e00b8333174e",
+    "content-hash": "77400773a6081a1a73b2b21734ca298e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -419,6 +419,60 @@
                 }
             ],
             "time": "2022-09-10T18:51:20+00:00"
+        },
+        {
+            "name": "eastwest/eloquent-to-raw-sql",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jannejava/eloquent-to-raw-sql.git",
+                "reference": "4879a554cfee4901a502dfe7177a71dff5c7524f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jannejava/eloquent-to-raw-sql/zipball/4879a554cfee4901a502dfe7177a71dff5c7524f",
+                "reference": "4879a554cfee4901a502dfe7177a71dff5c7524f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^5.7|^5.8|^6.0|^7.0|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Eastwest\\EloquentToRawSql\\EloquentToRawSqlServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Eastwest\\EloquentToRawSql\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Östlund",
+                    "email": "janne@eastwest.se",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This is my package EloquentToRawSql",
+            "homepage": "https://github.com/jannejava/eloquent-to-raw-sql",
+            "keywords": [
+                "eastwest",
+                "eloquent-to-raw-sql",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/jannejava/eloquent-to-raw-sql/issues",
+                "source": "https://github.com/jannejava/eloquent-to-raw-sql/tree/v1.0.1"
+            },
+            "time": "2021-07-24T17:55:26+00:00"
         },
         {
             "name": "egulias/email-validator",
