@@ -48,7 +48,11 @@ class Store extends Model
     public function scopeOrderByDistance($query,$coordinates,string $direction = 'asc'): void
     {
         $direction = strtolower($direction) === 'asc'? 'asc' : 'desc';
-        if (!collect($query->getQuery()->columns)->contains('distance')) {
+
+        $array = array_filter($query->getQuery()->columns,function ($item){
+            return str_contains($item,'distance');
+        });
+        if (empty($array)){
             $query->orderByRaw(
                 'ST_Distance(
                     location,
