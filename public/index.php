@@ -76,8 +76,11 @@ $kernel->terminate($request, $response);
 // create stores seeder command
 // php artisan make:seeder StoreSeeder
 
+// create regions model and migration command and controller
+// php artisan make:model Region -m -c
 
-
+// create companies seeders command
+// php artisan make:seeder CompanySeeder
 
 
 
