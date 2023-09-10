@@ -17,7 +17,7 @@ class CreateRegionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('color',7);
-            $table->geometry('geometry');
+            $table->geometry('geometry'); // the location "the area of the region on the world map" of the region
             $table->timestamps();
         });
     }
