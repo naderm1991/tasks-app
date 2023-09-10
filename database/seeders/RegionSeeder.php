@@ -21,15 +21,13 @@ class RegionSeeder extends Seeder
 
     public function seedRegions(): void
     {
-        $this->getRegions()->each(function ($region) {
-            Region::query()->create([
+        $this->getRegions()->each(fn ($region) => Region::query()->create([
                 'name' => $region['name'],
                 'color' => $region['color'],
                 'geometry' => (function () use ($region) {
                     return DB::raw("ST_GeomFromText('{$region['geometry']}')");
                 })()
-            ]);
-        });
+        ]));
     }
 
     public function getRegions(): Collection

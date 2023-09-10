@@ -25,41 +25,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $i= 0;
-        $array = [];
-        $file_data  = array_map('str_getcsv', file(base_path('database/seeders/stores.csv')));
-
-        dump($file_data[0]);
-        $test = collect($file_data)
-//            ->filter(fn ($store) => in_array($store[2],['AB','BC','MB','NB','NL','NS','NT','NU','ON','PE','QC','SK','YT']))
-            ->groupBy(function ($store){
-//                dump($store[2]);
-                return $store[2];
-            })
-            //fn ($store) => $store->count() > 50 ? $store->random(50) : $store
-            ->flatMap(function ($stores) use (&$i){
-//                dump($stores);
-
-                $i++;
-//                dump($stores->count());
-                dump($stores->count());
-
-                // if the count of the stores located in the province is greater than 50, then return random store from the province
-                return $stores->flatMap(fn ($stores) => $stores->count() > 50 ? $stores->random(50) : $stores);
-            })
-            ->each(function ($store) use (&$array) {
-//                dd($store);
-                $array[] = [
-                    'name' => $store[1],
-                    'location' => DB::raw("ST_SRID('POINT( $store[1])')"),
-                ];
-            })
-        ;
-
-        dump($i);
-//        dd($array);
-        dd(count($array));
-        die;
         $this->call(StoreSeeder::class);
 
         $this->call(DeviceSeeder::class);
@@ -84,6 +49,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RegionSeeder::class);
 
-        $this->call(Customer::class);
+        $this->call(CustomerSeeder::class);
     }
 }
