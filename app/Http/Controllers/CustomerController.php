@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Region;
 use App\Models\User;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
@@ -21,11 +22,11 @@ class CustomerController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $customers = Customer::query()
-            //->with('salesRep')
-            ->orderBy('name')
-            ->paginate()
-        ;
-        return view('customers.index', ['customers' => $customers]);
+        $regions = Region::all();
+        $customers = Customer::all();
+        return view('customers.map', [
+            'customers' => $customers,
+            'regions' => $regions,
+        ]);
     }
 }
