@@ -57,7 +57,7 @@
             });
 
             customers.forEach(function (customer) {
-                let el = doucment.createElement('div');
+                let el = document.createElement('div');
                 el.innerHTML = `<div class="rounded-full bg-white w-3 h-3 bg-white opacity-75"></div>`;
                 new window.mapboxgl.Marker(el)
                     .setLngLat([customer.longitude, customer.latitude])
