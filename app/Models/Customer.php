@@ -84,11 +84,23 @@ class Customer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public static function booted(): void
+    {
+        static::addGlobalScope(function ($query){
+            $query->selectRaw('ST_X(location) as latitude, ST_Y(location) as longitude');
+        });
+    }
+
     public function scopeVisibleTo($query, User $user)
     {
         if ($user->is_owner) {
             return $query;
         }
         return $query->where('sales_rep_id', $user->id);
+    }
+
+    public function scopeInRegion($query, Region $region)
+    {
+        $query->whereRaw('ST_Contains(?, customers.location)', [$region->geometry]);
     }
 }
