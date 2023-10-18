@@ -4,14 +4,18 @@ namespace App\Models;
 
 use App\Model;
 use Database\Factories\CustomerFactory;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 /**
  * App\Models\Customer
@@ -23,16 +27,15 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $state
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\User|null $salesRep
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
+ * @property-read User|null $salesRep
+ * @property-read Collection<int, PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static CustomerFactory factory(...$parameters)
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
  * @method static Builder|Customer query()
- * @method static Builder|Customer visibleTo(\App\Models\User $user)
  * @method static Builder|Customer whereCity($value)
  * @method static Builder|Customer whereCreatedAt($value)
  * @method static Builder|Customer whereId($value)
@@ -40,7 +43,10 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|Customer whereSalesRepId($value)
  * @method static Builder|Customer whereState($value)
  * @method static Builder|Customer whereUpdatedAt($value)
- * @mixin \Eloquent
+ *
+ * @method static Builder|Customer visibleTo(User $user)
+ * @method static Builder|Customer inRegion(null|Model $region)
+ * @mixin Eloquent
  */
 class Customer extends Model
 {
@@ -99,7 +105,7 @@ class Customer extends Model
         return $query->where('sales_rep_id', $user->id);
     }
 
-    public function scopeInRegion($query, Region $region)
+    public function scopeInRegion($query, Region $region): void
     {
         $query->whereRaw("ST_Contains(?, customers.location)", [$region->geometry]);
     }

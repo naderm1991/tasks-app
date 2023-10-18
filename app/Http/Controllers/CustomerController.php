@@ -22,15 +22,13 @@ class CustomerController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $regions = Region::all();
-
         $customers = Customer::query()
-            ->inRegion(Region::query()->where('name', 'The Prairies')->first())
-            ->get()
+            ->inRandomOrder()
+            ->first()
         ;
 
-//        dd($regions->where('name', 'British Columbia')->first());
-//        dd($customers);
+        $regions = Region::hasCustomers($customers)->get();
+
         return view('customers.map', [
             'customers' => $customers,
             'regions' => $regions,

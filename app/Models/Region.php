@@ -11,18 +11,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string $color
+ * @property mixed $geometry
  */
 class Region extends Model
 {
     use HasFactory;
 
-    public static function booted()
+    public static function booted(): void
     {
         static::addGlobalScope(function ($query){
             if (is_null($query->getQuery()->columns)) {
                 $query->select(['*']);
             }
-
             $query->selectRaw('ST_AsGeoJSON(geometry) as geometry_as_json');
         });
     }
