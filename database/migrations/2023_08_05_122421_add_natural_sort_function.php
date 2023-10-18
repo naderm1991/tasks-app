@@ -118,9 +118,12 @@ class AddNaturalSortFunction extends Migration
      */
     public function down()
     {
-        if (config('database.default') === 'mysql' || config('database.default') === 'pgsql') {
+        $query = 'DROP FUNCTION IF EXISTS natural_sort';
+        if (config('database.default') === 'pgsql') {
             //todo add "cascade" in case of psql only
-            DB::unprepared('DROP FUNCTION IF EXISTS natural_sort');
+            $query = 'DROP FUNCTION IF EXISTS natural_sort(text) CASCADE';
         }
+        DB::unprepared($query);
+
     }
 }

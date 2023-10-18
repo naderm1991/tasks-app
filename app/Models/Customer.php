@@ -101,6 +101,6 @@ class Customer extends Model
 
     public function scopeInRegion($query, Region $region)
     {
-        $query->whereRaw('ST_Contains(?, customers.location)', [$region->geometry]);
+        $query->whereRaw("ST_Contains(?, customers.location)", [$region->geometry]);
     }
 }

@@ -24,9 +24,10 @@ class CustomerController extends Controller
     {
         $regions = Region::all();
 
-        $customers = Customer::query()->inRegion(
-            Region::query()->where('name', 'The Prairies')->first()
-        )->get();
+        $customers = Customer::query()
+            ->inRegion(Region::query()->where('name', 'The Prairies')->first())
+            ->get()
+        ;
 
 //        dd($regions->where('name', 'British Columbia')->first());
 //        dd($customers);
