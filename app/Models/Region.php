@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $color
  * @property mixed $geometry
+ * @method static Builder|Customer hasCustomer(null|Model $region)
  */
 class Region extends Model
 {
@@ -25,5 +27,10 @@ class Region extends Model
             }
             $query->selectRaw('ST_AsGeoJSON(geometry) as geometry_as_json');
         });
+    }
+
+    public function scopeHasCustomer($query, Customer $customer): void
+    {
+        $query->whereRaw("ST_Contains(regions.geometry, ?)", [$customer->location]);
     }
 }

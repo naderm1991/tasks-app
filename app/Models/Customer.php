@@ -32,6 +32,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read User|null $salesRep
  * @property-read Collection<int, PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ * @property mixed $location
  * @method static CustomerFactory factory(...$parameters)
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
@@ -93,7 +94,11 @@ class Customer extends Model
     public static function booted(): void
     {
         static::addGlobalScope(function ($query){
+            if (is_null(static::getQuery()->columns)) {
+                $query->select(['*']);
+            }
             $query->selectRaw('ST_X(location) as latitude, ST_Y(location) as longitude');
+
         });
     }
 

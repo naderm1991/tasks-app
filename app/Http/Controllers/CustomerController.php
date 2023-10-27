@@ -23,11 +23,13 @@ class CustomerController extends Controller
     public function index(): View|Factory|Application
     {
         $customers = Customer::query()
-            ->inRandomOrder()
-            ->first()
+        //    ->inRandomOrder()
+       //     ->take(1)
+            ->inRegion(Region::query()->first())
+            ->get()
         ;
-
-        $regions = Region::hasCustomers($customers)->get();
+//hasCustomer($customers->first())->
+        $regions = Region::get();
 
         return view('customers.map', [
             'customers' => $customers,
